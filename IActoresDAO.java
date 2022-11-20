@@ -1,14 +1,13 @@
-package es.uah.FilmsActores.service;
+package es.uah.FilmsActores.dao;
 
 import es.uah.FilmsActores.model.Actor;
-
 import java.util.List;
 
-public interface IActoresService {
+public interface IActoresDAO {
 
     List<Actor> buscarTodos();
 
-    Actor buscarActorPorId(Integer idActor);
+    Actor buscarActorPorId (Integer idActor);
 
     Actor buscarActorPorNombre(String nombre);
 
@@ -19,5 +18,7 @@ public interface IActoresService {
     void actualizarActor(Actor actor);
 
     void inscribirFilm(Integer idActor, Integer idFilm);
+
+
 
 }

@@ -1,29 +1,62 @@
-package es.uah.cFilmsActores.model;
+package es.uah.FilmsActores.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
-
+import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "films", schema = "films_actores_db")
 public class Film {
-    private  Integer idFilm;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name = "idFilm")
+    private Integer idFilm;
+    @Basic
+    @Column(name = "titulo")
     private String titulo;
+    @Basic
+    @Column(name = "ano")
     private Integer ano;
+    @Basic
+    @Column(name = "duracion")
     private String duracion;
+    @Basic
+    @Column(name = "pais")
     private String pais;
+    @Basic
+    @Column(name = "genero")
     private String genero;
+    @Basic
+    @Column(name = "direccion")
     private String direccion;
+    @Basic
+    @Column(name = "reparto")
     private String reparto;
+    @Basic
+    @Column(name = "idioma")
     private String idioma;
+    @Basic
+    @Column(name = "compania")
     private String compania;
+    @Basic
+    @Column(name = "sinopsis")
     private String sinopsis;
 
+    @Basic
+    @Column(name = "imagen")
     private String imagen;
 
+    @ManyToMany(mappedBy = "films")
+    @JsonIgnoreProperties("films")
     private List<Actor> actores;
 
+    public Film() {
+    }
 
-    public Film(Integer idFilm, String titulo, Integer ano, String duracion, String pais, String genero, String direccion, String reparto, String idioma, String compania, String sinopsis, String imagen){
+    public Film(Integer idFilm, String titulo, Integer ano, String duracion, String pais, String genero, String direccion, String reparto, String idioma, String compania, String sinopsis, String imagen) {
         this.idFilm = idFilm;
         this.titulo = titulo;
         this.ano = ano;
@@ -36,13 +69,8 @@ public class Film {
         this.compania = compania;
         this.sinopsis = sinopsis;
         this.imagen = imagen;
-
-
-
     }
-    public Film () {
 
-    }
     public Integer getIdFilm() {
         return idFilm;
     }
@@ -96,7 +124,7 @@ public class Film {
     }
 
     public void setDireccion(String direccion) {
-        this.direccion = direccion;
+        this.direccion = this.direccion;
     }
 
     public String getReparto() {
@@ -131,14 +159,6 @@ public class Film {
         this.sinopsis = sinopsis;
     }
 
-    public String getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
-    }
-
     public List<Actor> getActores() {
         return actores;
     }
@@ -147,13 +167,33 @@ public class Film {
         this.actores = actores;
     }
 
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
+    public void addActor(Actor actor) {
+        if (actor != null) {
+            getActores().add(actor);
+        }
+    }
+
+    public void removeActor(Actor actor) {
+        if (actor != null) {
+            getActores().remove(actor);
+        }
+    }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Film)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Film film = (Film) o;
-        return Objects.equals(idFilm, film.idFilm);
+        return Objects.equals(idFilm, film.idFilm) && Objects.equals(titulo, film.titulo) && Objects.equals(ano, film.ano) && Objects.equals(duracion, film.duracion) && Objects.equals(pais, film.pais) && Objects.equals(genero, film.genero) && Objects.equals(direccion, film.direccion) && Objects.equals(reparto, film.reparto) && Objects.equals(idioma, film.idioma) && Objects.equals(compania, film.compania) && Objects.equals(sinopsis, film.sinopsis);
     }
 
     @Override
@@ -161,6 +201,3 @@ public class Film {
         return Objects.hash(idFilm);
     }
 }
-
-
-
