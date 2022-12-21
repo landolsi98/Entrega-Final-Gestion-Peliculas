@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>DiscoveryMovies | Aplicación de gestion de fichas de peliculas</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+</head>
+<body>
+<div class="container">
+    <h2 th:text="${titulo}"
+        class="text-secondary border border-success border-top-0 border-left-0 border-right-0"></h2>
+    <form th:action="@{/cfilms/guardar/}" method="post" enctype="multipart/form-data" th:object="${film}">
+        <div th:if="${#fields.hasErrors('*')}" class='alert alert-danger' role='alert'>
+            Por favor corrija los siguientes errores:
+            <ul>
+                <li th:each="err : ${#fields.errors('*')}" th:text="${err}"/>
+            </ul>
+        </div>
+        <div class="mb-3">
+            <label for="titulo" class="form-label">Titulo</label>
+            <input type="text" class="form-control" th:field="*{titulo}" id="titulo" name="titulo"
+                   placeholder="Escriba el nombre de la pelicula" required="required">
+        </div>
+        <div class="mb-3">
+            <label for="ano" class="form-label">Año</label>
+            <input type="number" class="form-control" th:field="*{ano}" id="ano" name="ano"
+                   placeholder="Escriba el año en que la película se estrenó" required="required">
+        </div>
+        <div class="mb-3">
+            <label for="duracion" class="form-label">Duración</label>
+            <input type="text" class="form-control" th:field="*{duracion}" id="duracion" name="duracion"
+                   placeholder="Escriba la duracion de la pelicula en minutos" required="required">
+        </div>
+        <div class="mb-3">
+            <label for="pais" class="form-label">Pais</label>
+            <input type="text" class="form-control" th:field="*{pais}" id="pais" name="pais"
+                   placeholder="Escriba el pais original de la pelicula" required="required">
+        </div>
+
+        <div class="mb-3">
+            <label for="direccion" class="form-label">Dirección</label>
+            <input type="text" class="form-control" th:field="*{direcion}" id="direccion" name="direccion"
+                   placeholder="Escriba la direccion cinematográfica de la pelicula" required="required">
+        </div>
+        <div class="mb-3">
+            <label for="reparto" class="form-label">Reparto</label>
+            <input type="text" class="form-control" th:field="*{reparto}" id="reparto" name="reparto"
+                   placeholder="Escriba el reparto de la pelicula ( los actores )" required="required">
+        </div>
+
+        <div class="mb-3">
+            <label for="idioma" class="form-label">Idioma</label>
+            <input type="text" class="form-control" th:field="*{idioma}" id="idioma" name="idioma"
+                   placeholder="Escriba el idioma de la pelicula " required="required">
+        </div>
+        <div class="mb-3">
+            <label for="compania" class="form-label">Compañia</label>
+            <input type="text" class="form-control" th:field="*{compania}" id="compania" name="compania"
+                   placeholder="Escriba la compania de la pelicula " required="required">
+        </div>
+        <div class="mb-3">
+            <label for="sinopsis" class="form-label">Sinopsis</label>
+            <input type="text" class="form-control" th:field="*{sinopsis}" id="sinopsis" name="sinopsis"
+                   placeholder="Escriba el sinopsis de la pelicula " required="required">
+        </div>
+
+        <div class="mb-3">
+            <select class="form-select"  Genero th:field="*{genero}" name="genero" id="genero">
+                                      Genero
+                <!--                 <option th:value="" selected>Seleccionar genero</option> -->
+                <option th:value="Drama">Drama</option>
+                <option th:value="Thriller">Thriller</option>
+                <option th:value="Crimen">Crimen</option>
+                <option th:value="Accion">Acción</option>
+                <option th:value="ficción">Ciencia ficción</option>
+                <option th:value="Comedia">Comedia</option>
+                <option th:value="Documental">Documental</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="file" class="col-sm-2 col-form-label">Imagen</label>
+            <div class="col-sm-6">
+                <input type="file" id="file" name="file" class="form-control"/>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-dark">Guardar</button>
+        <input type="hidden" th:field="*{idFilm}" />
+    </form>
+    <hr>
+    <a class="btn btn-primary" role="button" th:href="@{/cfilms/}">Ir a Inicio</a>     <a class="btn btn-outline-warning" role="button" th:href="@{/cfilms/listado}">Volver</a>
+
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

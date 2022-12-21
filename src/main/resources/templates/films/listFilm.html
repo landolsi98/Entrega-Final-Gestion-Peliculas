@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>DiscoveryMovies | Aplicación de gestion de fichas de peliculas - Listado peliculas</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+
+    <div class="card">
+        <h2 th:text="${titulo}" class="card-header"></h2>
+        <div class="card-body">
+            <div th:if="${msg != null}" class='alert alert-success' th:text="${msg}" role='alert'></div>
+            <h4 class="card-title">
+                <a th:href="@{/cfilms/nuevo}" class="btn btn-primary btn-xs">Agregar nueva pelicula</a>
+            </h4>
+
+            <table class="table table-hover">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Identificador</th>
+                    <th scope="col">Titulo</th>
+                    <th scope="col">Ano</th>
+                    <th scope="col">Duracion</th>
+                    <th scope="col">Pais</th>
+                    <th scope="col">Genero</th>
+                    <th scope="col">Dirección</th>
+                    <th scope="col">Reparto</th>
+                    <th scope="col">Idioma</th>
+                    <th scope="col">Compania</th>
+                    <th scope="col">Sinopsis</th>
+                    <th scope="col">photo</th>
+                    <th scope="col">accion</th>
+
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="film : ${listadoFilms}">
+                    <td th:text="${film.idFilm}">
+                    </td>
+                    <td th:text="${film.titulo}"></td>
+                    <td th:text="${film.ano}"></td>
+                    <td th:text="${film.duracion}"></td>
+                    <td th:text="${film.pais}"></td>
+                    <td th:text="${film.genero}"></td>
+                    <td th:text="${film.direcion}"></td>
+                    <td th:text="${film.reparto}"></td>
+                    <td th:text="${film.idioma}"></td>
+                    <td th:text="${film.compania}"></td>
+                    <td th:text="${film.sinopsis}"></td>
+                    <td >
+                        <img  class="img-thumbnail rounded float-left"
+                             style="max-width: 25%;" th:src="@{'/cfilms/uploads/' + ${film.imagen}}"
+                             th:alt="${film.imagen}" />
+                    </td>
+
+                    <td>
+
+                        <a th:href="@{/cfilms/editar/{id}  (id=${film.idFilm})  }" th:text="'editar'" class="btn btn-success btn-sm" role="button" title="Editar la pelicula."><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                        <a th:href="@{/cfilms/borrar/{id}  (id=${film.idFilm})   }" th:text="'borrar'" onclick="return confirm('¿Estas seguro?')" class="btn btn-danger btn-sm" role="button" title="Eliminar la pelicula."><i class="fas fa-trash" aria-hidden="true"></i></a>
+                    </td>
+
+
+                </tr>
+
+                </tbody>
+            </table>
+
+            <nav th:replace="paginator-nav :: paginator"></nav>
+
+        </div>
+    </div>
+    <hr>
+    <a class="btn btn-primary" role="button" th:href="@{/cfilms/}">Ir a Inicio</a>
+</div> <!-- /container -->
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
+</body>
+</html>

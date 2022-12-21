@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org": lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DiscoveryMovies | Aplicación de gestion de fichas de peliculas</title>
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+  <h2 th:text="${titulo}"
+      class="text-secondary border border-success border-top-0 border-left-0 border-right-0"></h2>
+  <form th:action="@{/cactores/guardar/}" method="post" th:object="${actor}" enctype="multipart/form-data">
+    <div th:if="${#fields.hasErrors('*')}" class='alert alert-danger' role='alert'>
+      Por favor corrija los siguientes errores:
+      <ul>
+          <li th:each="err : ${#fields.errors('*')}" th:text="${err}"/>
+
+      </ul>
+    </div>
+<div class="mb-3">
+  <label for="nombre" class="form-label">Nombre</label>
+  <input type="text" class="form-control" th:field="*{nombre}" id="nombre" name="nombre"
+         placeholder="Escriba el nombre del actor" required="required">
+</div>
+    <div class="mb-3">
+      <label for="fecha_de_nacimiento" class="form-label">  Fecha_de_nacimiento</label>
+      <input type="date" class="form-control" th:field="*{fechaDeNacimiento}" id="fecha_de_nacimiento" name="fecha_de_nacimiento"
+             placeholder="YYYY/MM/DD" required="required">
+    </div>
+    <div class="mb-3">
+      <label for="pais_de_nacimiento" class="form-label">  Pais_de_nacimiento</label>
+      <input type="text" class="form-control" th:field="*{paisDeNacimiento}" id="pais_de_nacimiento" name="pais_de_nacimiento"
+             placeholder="Escriba la pais_de_nacimiento del actor" required="required">
+    </div>
+
+
+    <button type="submit" class="btn btn-dark">Guardar</button>
+    <input type="hidden" th:field="*{idActor}"/>
+  </form>
+  <hr>
+  <a class="btn btn-primary" role="button" th:href="@{/cfilms/}">Ir a Inicio</a>   <a class="btn btn-outline-warning" role="button" th:href="@{/cactores/listado}">Volver</a>
+
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+  </form>
+
+
+
+</div>
+
+</body>
+</html>
