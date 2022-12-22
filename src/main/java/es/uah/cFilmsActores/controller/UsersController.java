@@ -31,7 +31,7 @@ public String usersList (Model model, @RequestParam(name = "page", defaultValue 
     Page<User> all = usersService.findAll(pageable);
     PageRender<User> pageRender = new PageRender<User>("/users/all", all);
     model.addAttribute ( "title", "listado de todos los usuarios");
-    model.addAttribute("allUsers", all);
+    model.addAttribute("usersList", all);
     model.addAttribute("page", pageRender);
     return "users/usersList";
 }

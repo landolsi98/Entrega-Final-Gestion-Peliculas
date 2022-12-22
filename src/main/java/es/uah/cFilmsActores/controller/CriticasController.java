@@ -29,7 +29,7 @@ public class CriticasController {
         Pageable pageable = PageRequest.of(page,6);
         Page<Critica> all = criticasService.findAll(pageable);
         PageRender<Critica> pageRender = new PageRender<Critica>("/criticas/all", all);
-        model.addAttribute("title", "Listado de todos las criticas");
+        model.addAttribute("title", "Listado de todas las criticas");
         model.addAttribute("criticasList", all);
         model.addAttribute("page", pageRender);
         return "criticas/criticasList";

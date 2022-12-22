@@ -13,16 +13,20 @@ private String username;
 
 private String password;
 
+
+private String email;
+
 private boolean enable;
 
 
 private List<Critica> criticas;
 
-    public User(Integer idUser, String username, String password, boolean enable) {
+    public User(Integer idUser, String username, String password, String email, boolean enable) {
         this.idUser = idUser;
         this.username = username;
         this.password = password;
         this.enable = enable;
+        this.email = email;
     }
     public User () {
 
@@ -42,6 +46,14 @@ private List<Critica> criticas;
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

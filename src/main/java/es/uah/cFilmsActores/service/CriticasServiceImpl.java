@@ -20,7 +20,7 @@ public class CriticasServiceImpl implements ICriticasService {
     RestTemplate template;
 
 
-    String url = "http://localhost:8090/api/films/films";
+    String url = "http://localhost:8002/criticas";
 
 
 

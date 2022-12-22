@@ -30,11 +30,13 @@ public class UploadFileServiceImpl implements IUploadFileService {
         log.info("pathFoto: " + pathFoto);
 
         Resource recurso = new UrlResource(pathFoto.toUri());
-
+/*
         if (!recurso.exists() || !recurso.isReadable()) {
             throw new RuntimeException("Error: no se puede cargar la imagen: " + pathFoto.toString());
         }
+        */
         return recurso;
+
     }
 
     @Override
