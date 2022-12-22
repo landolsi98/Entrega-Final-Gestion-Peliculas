@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>DiscoveryMovies | Aplicación de gestion de fichas de peliculas - Listado Actores</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h2 th:text="${title}" class="card-header"></h2>
+        <div class="card-body">
+            <div th:if="${msg != null}" class='alert alert-success' th:text="${msg}" role='alert'></div>
+            <h4 class="card-title">
+                <a th:href="@{/users/newUser}" class="btn btn-primary btn-xs">Agregar nuevo usuario</a>
+            </h4>
+            <table class="table table-hover">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Identificador</th>
+                    <th scope="col">UserName</th>
+                    <th scope="col">Password</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">enable</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="critica : ${criticasList}">
+                    <td th:text="${critica.idFilm}"></td>
+                    <td th:text="${critica.valoracion}"></td>
+                    <td th:text="${critica.nota}"></td>
+                    <td th:text="${critica.fecha}"></td>
+
+                    <td>
+                        <table>
+                            <tbody>
+                            test
+                            <tr th:each="critica: ${user.criticas}">
+                                <td th:text="${critica.valoracion}"></td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+
+                    <td>
+                        <a th:href="@{/users/edit/{id}  (id=${user.idUser})  }" th:text="'editar'"
+                           class="btn btn-success btn-sm" role="button" title="Editar usuario."><i
+                                class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+
+
+                        <a th:href="@{/users/borrar/{id}  (id=${user.idUser})   }" th:text="'borrar'"
+                           onclick="return confirm('¿Estas seguro?')" class="btn btn-danger btn-sm" role="button"
+                           title="Eliminar actor."><i class="fas fa-trash" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+
+            <nav th:replace="paginator-nav :: paginator"></nav>
+
+        </div>
+    </div>
+    <hr>
+    <a class="btn btn-primary" role="button" th:href="@{/cfilms/}">Ir a Inicio</a>
+</div> <!-- /container -->
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{/js/bootstrap.min.js}"></script>
+</div>
+</body>
+</html>
