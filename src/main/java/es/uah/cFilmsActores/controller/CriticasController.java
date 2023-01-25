@@ -92,11 +92,11 @@ public String newCritica(Model model) {
         return "criticas/criticasList";
     }
 
-    @GetMapping("/borrar/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteCritica(Model model, @PathVariable("id") Integer id, RedirectAttributes attributes) {
         criticasService.deleteCritica(id);
         attributes.addFlashAttribute("msg", "Los datos de la critica fueron borrados!");
-        return "redirect:/criticas/criticasList";
+        return "redirect:/criticas/all";
     }
 
 }

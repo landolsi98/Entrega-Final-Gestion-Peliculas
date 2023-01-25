@@ -13,16 +13,17 @@
         <div class="card-body">
             <div th:if="${msg != null}" class='alert alert-success' th:text="${msg}" role='alert'></div>
             <h4 class="card-title">
-                <a th:href="@{/users/newUser}" class="btn btn-primary btn-xs">Agregar nuevo usuario</a>
+                <a th:href="@{/users/newUser}" class="btn btn-success btn-xs">Agregar nuevo usuario +</a>
             </h4>
-            <table class="table table-hover">
-                <thead class="thead-light">
+            <table class="table table-hover ">
+                <thead class="table-dark">
                 <tr>
                     <th scope="col">Identificador</th>
                     <th scope="col">Username</th>
                     <th scope="col">Password</th>
                     <th scope="col">Email</th>
                     <th scope="col">enable</th>
+                    <th scope="col">Rol</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -32,35 +33,37 @@
                     <td th:text="${user.password}"></td>
                     <td th:text="${user.email}"></td>
                     <td th:text="${user.enable}"></td>
-
-                    <td>
-                        <table>
-
-                        </table>
-                    </td>
-
-                    <td>
-                        <a th:href="@{/users/edit/{id}  (id=${user.idUser})  }" th:text="'editar'"
-                           class="btn btn-success btn-sm" role="button" title="Editar usuario."><i
-                                class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                    <!--  <td th:text="${user.idRol.rol}"></td> -->
 
 
-                        <a th:href="@{/users/borrar/{id}  (id=${user.idUser})   }" th:text="'borrar'"
-                           onclick="return confirm('¿Estas seguro?')" class="btn btn-danger btn-sm" role="button"
-                           title="Eliminar actor."><i class="fas fa-trash" aria-hidden="true"></i></a>
-                    </td>
-                </tr>
+                      <td>
+                          <table>
 
-                </tbody>
-            </table>
+                          </table>
+                      </td>
 
-            <nav th:replace="paginator-nav :: paginator"></nav>
+                      <td>
+                          <a th:href="@{/users/edit/{id}  (id=${user.idUser})  }" th:text="'editar'"
+                             class="btn btn-secondary btn-sm" role="button" title="Editar usuario."><i
+                                  class="fas fa-pencil-alt" aria-hidden="true"></i></a>
 
-        </div>
-    </div>
-    <hr>
-    <a class="btn btn-primary" role="button" th:href="@{/cfilms/}">Ir a Inicio</a>
-</div> <!-- /container -->
+
+                          <a th:href="@{/users/delete/{id}  (id=${user.idUser})   }" th:text="'borrar'"
+                             onclick="return confirm('¿Estas seguro?')" class="btn btn-danger btn-sm" role="button"
+                             title="Eliminar actor."><i class="fas fa-trash" aria-hidden="true"></i></a>
+                      </td>
+                  </tr>
+
+                  </tbody>
+              </table>
+
+              <nav th:replace="paginator-nav :: paginator"></nav>
+
+          </div>
+      </div>
+      <hr>
+      <a class="btn btn-success" role="button" th:href="@{/cfilms/}">Ir a Inicio</a>
+  </div> <!-- /container -->
 
 <!-- Bootstrap core JavaScript
 ================================================== -->

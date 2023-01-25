@@ -83,7 +83,7 @@ public String usersList (Model model, @RequestParam(name = "page", defaultValue 
     }
 
     @PostMapping("/save")
-    public String saveUser(Model model, User user, RedirectAttributes attributes)  {
+    public String saveUser(Model model, User user,   RedirectAttributes attributes)  {
     usersService.saveUser(user);
     model.addAttribute("title", "nuevo usuario");
     attributes.addFlashAttribute("msg", "los datos del usuario fueron guardados !");
@@ -125,15 +125,15 @@ public String usersList (Model model, @RequestParam(name = "page", defaultValue 
 
     @GetMapping ("/delete/{id}")
     public String deleteUser(Model model, @PathVariable("id")Integer id, RedirectAttributes attributes){
-
+/*
     User user = usersService.findUserById(id);
-    if ( user != null) {
+    if ( user != null) {*/
     usersService.deleteUser(id);
     attributes.addFlashAttribute("msg", "los datos del usuario fueron borrados!");
-    } else {
+   /* } else {
         attributes.addFlashAttribute("msg", "Usuario no encontrado!");
-    }
-    return "redirect:/users/allUsers";
+    }*/
+    return "redirect:/users/all";
     }
 
 
