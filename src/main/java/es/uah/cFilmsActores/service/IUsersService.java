@@ -15,6 +15,8 @@ public interface IUsersService {
 
     User findUserByEmail (String email);
 
+    User login (String email, String password);
+
 
     void saveUser(User user);
 

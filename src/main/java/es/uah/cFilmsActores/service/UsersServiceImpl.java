@@ -20,7 +20,7 @@ public class UsersServiceImpl  implements IUsersService {
     @Autowired
     RestTemplate template;
 
-    String url = "http://localhost:8002/users";
+    String url = "http://localhost:8090/api/criticas/users";
 
 
     @Override
@@ -58,6 +58,12 @@ public class UsersServiceImpl  implements IUsersService {
     @Override
     public User findUserByEmail(String email) {
         User user = template.getForObject(url + "/email/" + email, User.class);
+        return user;
+    }
+
+    @Override
+    public User login(String email, String password) {
+        User user = template.getForObject(url + "/login/" + email + "/" + password,User.class);
         return user;
     }
 

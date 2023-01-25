@@ -1,6 +1,7 @@
 package es.uah.cFilmsActores.model;
 
 import es.uah.cFilmsActores.model.Critica;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,11 +14,15 @@ private String username;
 
 private String password;
 
-
 private String email;
+
+
+private List<Rol> roles;
+
 
 private boolean enable;
 
+    private Rol rol;
 
 private List<Critica> criticas;
 
@@ -27,9 +32,13 @@ private List<Critica> criticas;
         this.password = password;
         this.enable = enable;
         this.email = email;
+        this.criticas = criticas;
     }
     public User () {
 
+    }
+
+    public User(String user, String password, List<GrantedAuthority> grantedAuths) {
     }
 
     public Integer getIdUser() {
@@ -72,6 +81,14 @@ private List<Critica> criticas;
         this.enable = enable;
     }
 
+    public List<Rol> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Rol> roles) {
+        this.roles = roles;
+    }
+
     public List<Critica> getCriticas() {
         return criticas;
     }
@@ -92,4 +109,6 @@ private List<Critica> criticas;
     public int hashCode() {
         return Objects.hash(idUser);
     }
+
+
 }
