@@ -67,8 +67,8 @@ public class CriticasController {
 
 
 
-    @GetMapping ("newCritica")
-public String newCritica(Model model) {
+    @GetMapping ("/newCritica")
+       public String newCritica(Model model) {
         model.addAttribute("title", "nueva critica" );
         Critica critica = new Critica();
         model.addAttribute ("critica", critica);
@@ -76,12 +76,12 @@ public String newCritica(Model model) {
 
 }
 
-    @PostMapping("/save/")
+    @PostMapping("/save")
     public String saveCritica(Model model, Critica critica, RedirectAttributes attributes) {
         criticasService.saveCritica(critica);
         model.addAttribute("title", "Nueva critica");
         attributes.addFlashAttribute("msg", "Los datos de la critica  fueron guardados!");
-        return "redirect:/criticas/criticasList";
+        return "redirect:/criticas/all";
     }
 
     @GetMapping("/edit/{id}")

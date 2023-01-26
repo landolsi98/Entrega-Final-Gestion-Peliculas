@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org": lang="en">
 <head>
@@ -7,9 +8,9 @@
 </head>
 <body>
 <div class="container">
-    <h2 th:text="${titulo}"
+    <h2 th:text="${title}"
         class="text-secondary border border-success border-top-0 border-left-0 border-right-0"></h2>
-    <form th:action="@{/users/save/}" method="post" th:object="${user}" enctype="multipart/form-data">
+    <form th:action="@{/criticas/save/}" method="post" th:object="${critica}" enctype="multipart/form-data">
         <div th:if="${#fields.hasErrors('*')}" class='alert alert-danger' role='alert'>
             Por favor corrija los siguientes errores:
             <ul>
@@ -18,18 +19,23 @@
             </ul>
         </div>
         <div class="mb-3">
-            <label for="nombre" class="form-label">Username</label>
-            <input type="text" class="form-control" th:field="*{username}" id="nombre" name="nombre"
+            <label for="valoracion" class="form-label">Valoracion</label>
+            <input type="text" class="form-control" th:field="*{valoracion}" id="valoracion" name="valoracion"
                    placeholder="Escriba el nombre del actor" required="required">
         </div>
         <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="text" class="form-control" th:field="*{email}" id="email" name="email"
-                   placeholder="Escriba su correro electronico" required="required">
+            <label for="nota" class="form-label">Nota</label>
+            <input type="text" class="form-control" th:field="*{nota}" id="nota" name="nota"
+                   placeholder="Escriba la nota de la pelicula" required="required">
         </div>
         <div class="mb-3">
-            <label for="email" class="form-label">Password</label>
-            <input type="password" class="form-control" th:field="*{password}" id="password" name="password"
+            <label for="fecha" class="form-label">Fecha</label>
+            <input type="date" class="form-control" th:field="*{fecha}" id="fecha" name="fecha"
+                   placeholder="Escriba su contraseña" required="required">
+        </div>
+        <div class="mb-3">
+            <label for="idFilm" class="form-label">Pelicula</label>
+            <input type="text" class="form-control" th:field="*{idFilm}" id="idFilm" name="idFilm"
                    placeholder="Escriba su contraseña" required="required">
         </div>
         <!--
@@ -43,10 +49,10 @@
 
 
         <button type="submit" class="btn btn-dark">Guardar</button>
-        <input type="hidden" th:field="*{idUser}"/>
+        <input type="hidden" th:field="*{idCritica}"/>
     </form>
     <hr>
-    <a class="btn btn-primary" role="button" th:href="@{/cfilms/}">Ir a Inicio</a>   <a class="btn btn-outline-warning" role="button" th:href="@{/users/all}">Volver</a>
+    <a class="btn btn-primary" role="button" th:href="@{/cfilms/}">Ir a Inicio</a>   <a class="btn btn-outline-warning" role="button" th:href="@{/criticas/all}">Volver</a>
 
 </div>
 

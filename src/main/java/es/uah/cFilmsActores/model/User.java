@@ -22,7 +22,6 @@ private List<Rol> roles;
 
 private boolean enable;
 
-    private Rol rol;
 
 private List<Critica> criticas;
 
@@ -32,7 +31,6 @@ private List<Critica> criticas;
         this.password = password;
         this.enable = enable;
         this.email = email;
-        this.rol = rol;
         this.criticas = criticas;
     }
     public User () {
