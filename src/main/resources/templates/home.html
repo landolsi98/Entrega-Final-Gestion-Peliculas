@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="es">
 <head>
     <meta charset="UTF-8">
     <title>DiscoveryMovies | Aplicación de gestion de fichas de peliculas</title>
@@ -24,50 +24,26 @@
         </div>
     </nav>
         </div>
-
+<p> test </p>
 <br>
 <br>
-<div class="container">
-<div class="row row-cols-1 row-cols-md-2 g-4">
-    <div class="col">
-        <div class="card rounded" style="width: 28rem;" >
-            <a th:href="@{/cfilms/listado}"> <img th:src="@{/uploads/marche-badass.jpg}" width="40" height="200" class="card-img-top" alt="..."  > </a>
-            <div class="card-body">
-                <h5 class="card-title">Listado de Peliculas</h5>
-                <p class="card-text">Encuentre una variedad de películas para satisfacer sus antojos... <a class="btn btn-primary" th:href="@{/cfilms/listado}"> Ver peliculas</a> </p>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card rounded" style="width: 28rem;">
-            <img th:src="@{/uploads/photo_actores1.png}" width="40" height="200" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Listado de Actores</h5>
-                <p class="card-text">Encuentre una variedad de actores to todo el mundo... <a class="btn btn-primary" th:href="@{/cactores/listado}"> Ver Actores </a> </p>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card rounded" style="width: 28rem;">
-            <img th:src="@{/uploads/movie_search.png}" width="40" height="200" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Búsqueda de Peliculas</h5>
-                <p class="card-text">Busca  lo que necesitas...<a class="btn btn-primary" th:href="@{/cfilms/buscar}" > Buscar </a></p>
-            </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card rounded" style="width: 28rem;">
-            <img th:src="@{/uploads/clapperboard.png}" width="40" height="200" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Agregar Peliculas/Actores</h5>
-                <p class="card-text">Gestiona sus peliculas y actores... <a class="btn btn-primary" th:href="@{/cactores/nuevo}"> Agregar Actores </a> <a class="btn btn-primary" th:href="@{/cfilms/nuevo}"> Agregar Peliculas </a></p>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
+<div class="container text-center" >
+    <h2> Discover Movies</h2>
+    <h3> Puedes encontrar lo que quiras</h3>
+    <div class="row row-cols-4" >
+        <div class="col"th:each="film : ${listadoFilms}">
+            <br>
+            <br>
+         <a   th:href="@{/cfilms/idfilm/{id}(id=${film.idFilm})} "> <img class="imageFilm" th:src="@{/uploads/badboys.jpg}" width="200" height="260"  alt="film1" > </a>
+            <br>
 
+            <div  class="title_film"  th:text="${film.titulo}"></div>
+            <div  class="genero_film"  ©></div>
+
+        </div>
+
+    </div>
+</div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

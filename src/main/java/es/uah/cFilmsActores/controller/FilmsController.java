@@ -52,10 +52,10 @@ public class FilmsController {
     }
 
 
-    @GetMapping(value = {"/", "/home", ""})
-    public String home(Model model) {
-        return "home";
-    }
+   // @GetMapping(value = {"/", "/homepage", ""})
+   // public String home(Model model) {
+     //   return "home";
+  //  }
 
 
     @GetMapping("/nuevo")
@@ -71,22 +71,23 @@ public class FilmsController {
         return "films/searchFilm";
     }
 
-    @GetMapping("/listado")
+    @GetMapping(value = {"/", "/home", ""})
     public String listadoFilms(Model model, @RequestParam(name = "page", defaultValue = "0") int page) {
-        Pageable pageable = PageRequest.of(page, 6);
+        Pageable pageable = PageRequest.of(page, 30);
         Page<Film> listado = filmsService.buscarTodos(pageable);
         PageRender<Film> pageRender = new PageRender<Film>("/cfilms/listado", listado);
         model.addAttribute("titulo", "Listado de todos los films");
         model.addAttribute("listadoFilms", listado);
         model.addAttribute("page", pageRender);
-        return "films/listFilm";
+        return "home";
+
     }
 
     @GetMapping("/idfilm/{id}")
     public String buscarFilmPorId(Model model, @PathVariable("id") Integer id) {
         Film film = filmsService.buscarFilmPorId(id);
         model.addAttribute("film", film);
-        return "formFilm";
+        return "FilmDetails";
 
     }
 
@@ -181,7 +182,7 @@ public class FilmsController {
         filmsService.guardarFilm(film);
         model.addAttribute("titulo", "Nuevo film");
         attributes.addFlashAttribute("msg", "Los datos de la pelicula fueron guardados!");
-        return "redirect:/cfilms/listado";
+        return "redirect:/cfilms/";
     }
 
     @GetMapping("/editar/{id}")

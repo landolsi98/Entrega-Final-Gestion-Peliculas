@@ -50,7 +50,7 @@ public class CriticasController {
 
     @GetMapping("/film/{idfilm}")
     public String findCriticaByIdFilm(Model model, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam("idFilm") Integer idFilm) {
-        Pageable pageable = PageRequest.of(page, 5);
+        Pageable pageable = PageRequest.of(page, 30);
         Page<Critica> all;
         if (idFilm.equals("")) {
             all = criticasService.findAll(pageable);

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>DiscoveryMovies | Aplicación de gestion de fichas de peliculas</title>
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+  <link th:href="@{/css/style.css}" rel="stylesheet">
+
+</head>
+<body>
+<div>
+  <!--navbar-->
+  <nav id="navbar" class="navbar navbar-light bg-dark " >
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img id="ICON" th:src="@{/uploads/movie.png}" alt="" width="50" height="40" class="d-inline-block align-text-top-success">
+        DiscoveryMovies
+      </a>
+      <form class="d-flex">
+        <a  class="btn btn-outline-success" type="submit" role="button" th:href="@{/cfilms/buscar}"> Buscar </a>
+      </form>
+
+    </div>
+  </nav>
+</div>
+<div class="homepage--hero">
+  <div class="container  ">
+    <div class="row first" style="text-align: center;">
+      <div class="col-sm-12" >
+        <br />
+        <p> </p>
+          <h2  th:text="${film.titulo}" > </h2>
+          <br />
+
+        <ul class="nav justify-content-center nav-tabs" >
+            <li class="nav-item" >
+              <a class="nav-link active" aria-current="page" href="#" >Ficha</a>
+            </li>
+            <li class="nav-item">
+              <!--critica selon idFilm-->
+              <a class="nav-link" th:href="@{/criticas/film/{idfilm}(idfilm=${film.idFilm})} ">Criticas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/cfilms/film/} ">Actores</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled">Disabled</a>
+            </li>
+          </ul>
+        </a>
+        <a href="*">
+          <img  th:src="@{/uploads/badboys.jpg}" width="200" height="260" alt="film2" style="display: inline-block;"
+          />
+        </a>
+      </div>
+    </div>
+  </div>
+  <br />
+  <br />
+
+  <br />
+
+</div>
+</div>
+</body>
+</html>

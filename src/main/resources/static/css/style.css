@@ -5,3 +5,24 @@
     font-weight: bold;
 
 }
+body {
+    background-color: #091B29;
+}
+
+.imageFilm{
+    margin-top: 25px;
+    margin-right: 5px;
+    margin-bottom: 3px;
+}
+.title_film {
+    color: whitesmoke;
+    font-size: 22px;
+}
+.genero_film {
+    font-size: 15px;
+    text-decoration:underline ;
+    color: lightgrey;
+}
+. {
+    margin-left: 120px;
+}
