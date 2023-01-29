@@ -11,10 +11,10 @@
 <body>
 <div>
     <!--navbar-->
-    <nav id="navbar" class="navbar navbar-light bg-dark " >
+    <nav id="navbar" class="navbar" style="background-color: darkgray;">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img id="ICON" th:src="@{/uploads/movie.png}" alt="" width="50" height="40" class="d-inline-block align-text-top-success">
+            <a class="navbar-brand" th:href="@{/cfilms/}">
+                <img id="ICON" th:src="@{/uploads/movieIcon.png}" alt="" width="50" height="40"  class="d-inline-block align-text-top-success">
                DiscoveryMovies
             </a>
             <form class="d-flex">
@@ -24,21 +24,20 @@
         </div>
     </nav>
         </div>
-<p> test </p>
-<br>
+
 <br>
 <div class="container text-center" >
-    <h2> Discover Movies</h2>
-    <h3> Puedes encontrar lo que quiras</h3>
+    <h2 style="color: ghostwhite ; font-size: 45px "  >  Movies Discovery</h2>
+    <h3 style="color: ghostwhite ; font-size: 15px ">descubre antes de ver </h3>
     <div class="row row-cols-4" >
         <div class="col"th:each="film : ${listadoFilms}">
             <br>
             <br>
-         <a   th:href="@{/cfilms/idfilm/{id}(id=${film.idFilm})} "> <img class="imageFilm" th:src="@{/uploads/badboys.jpg}" width="200" height="260"  alt="film1" > </a>
+         <a   th:href="@{/cfilms/idfilm/{id}(id=${film.idFilm})} "> <img class="imageFilm rounded-3" th:src="@{/uploads/badboys.jpg}" width="200" height="260"  alt="film1" > </a>
             <br>
 
             <div  class="title_film"  th:text="${film.titulo}"></div>
-            <div  class="genero_film"  ©></div>
+            <div  class="genero_film" th:text="${film.genero}" ></div>
 
         </div>
 

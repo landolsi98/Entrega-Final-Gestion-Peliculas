@@ -1,10 +1,7 @@
 package es.uah.cFilmsActores.controller;
 
 
-import es.uah.cFilmsActores.model.Actor;
 import es.uah.cFilmsActores.model.Critica;
-import es.uah.cFilmsActores.model.Film;
-import es.uah.cFilmsActores.model.User;
 import es.uah.cFilmsActores.paginator.PageRender;
 import es.uah.cFilmsActores.service.ICriticasService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,9 +56,9 @@ public class CriticasController {
         }
         PageRender<Critica> pageRender = new PageRender<Critica>("/all", all);
         model.addAttribute("title", "Listado de criticas por idFilm");
-        model.addAttribute("all criticas", all);
+        model.addAttribute("FilmCriticas", all);
         model.addAttribute("page", pageRender);
-        return "criticas/criticasList";
+        return "FilmCritica";
     }
 
 

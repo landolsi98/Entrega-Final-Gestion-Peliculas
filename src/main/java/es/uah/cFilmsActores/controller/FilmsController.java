@@ -82,6 +82,17 @@ public class FilmsController {
         return "home";
 
     }
+    @GetMapping("/all")
+    public String AllFilms(Model model, @RequestParam(name = "page", defaultValue = "0") int page) {
+        Pageable pageable = PageRequest.of(page, 30);
+        Page<Film> all = filmsService.buscarTodos(pageable);
+        PageRender<Film> pageRender = new PageRender<Film>("/cfilms/listado", all);
+        model.addAttribute("titulo", "Listado de todos los films");
+        model.addAttribute("allFilms", all);
+        model.addAttribute("page", pageRender);
+        return "films/listFilm";
+
+    }
 
     @GetMapping("/idfilm/{id}")
     public String buscarFilmPorId(Model model, @PathVariable("id") Integer id) {
@@ -197,7 +208,7 @@ public class FilmsController {
     public String eliminarFilm(Model model, @PathVariable("id") Integer id, RedirectAttributes attributes) {
         filmsService.eliminarFilm(id);
         attributes.addFlashAttribute("msg", "Los datos de la pelicula fueron borrados!");
-        return "redirect:/cfilms/listado";
+        return "redirect:/cfilms/all";
     }
 }
 

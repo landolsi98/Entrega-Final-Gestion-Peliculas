@@ -1,5 +1,5 @@
 .navbar-brand {
-    color: green;
+    color: #091B29;
     position: center;
     font-family: Ayuthaya;
     font-weight: bold;
@@ -21,8 +21,21 @@ body {
 .genero_film {
     font-size: 15px;
     text-decoration:underline ;
-    color: lightgrey;
+    color: #6b6868;
 }
 . {
     margin-left: 120px;
+}
+.imageD {
+    margin-right: 150px;
+}
+.mr-5 {
+    color: grey;
+    margin-left: 15px;
+    margin-right: 10px;
+    font-size: 15px;
+
+}
+#navbar{
+    color: white;
 }
