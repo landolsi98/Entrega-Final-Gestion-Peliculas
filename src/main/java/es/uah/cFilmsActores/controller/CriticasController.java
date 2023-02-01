@@ -46,7 +46,7 @@ public class CriticasController {
     }
 
     @GetMapping("/film/{idfilm}")
-    public String findCriticaByIdFilm(Model model, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam("idFilm") Integer idFilm) {
+    public String findCriticaByIdFilm(Model model, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(value = "idfilm" , required = false) Integer idFilm) {
         Pageable pageable = PageRequest.of(page, 30);
         Page<Critica> all;
         if (idFilm.equals("")) {
@@ -58,7 +58,7 @@ public class CriticasController {
         model.addAttribute("title", "Listado de criticas por idFilm");
         model.addAttribute("FilmCriticas", all);
         model.addAttribute("page", pageRender);
-        return "FilmCritica";
+        return "FilmDetails";
     }
 
 

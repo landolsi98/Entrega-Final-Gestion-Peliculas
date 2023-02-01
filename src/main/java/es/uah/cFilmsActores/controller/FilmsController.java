@@ -1,5 +1,6 @@
 package es.uah.cFilmsActores.controller;
 
+import es.uah.cFilmsActores.model.Actor;
 import es.uah.cFilmsActores.model.Film;
 import es.uah.cFilmsActores.paginator.PageRender;
 import es.uah.cFilmsActores.service.IFilmsService;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.List;
 
 
 @Controller
@@ -102,6 +105,17 @@ public class FilmsController {
 
     }
 
+    @GetMapping("/idfilm/actor/{id}")
+    public String buscarActoPorId(Model model, @PathVariable("id") Integer id) {
+        Film film = filmsService.buscarFilmPorId(id);
+        model.addAttribute("film", film);
+        return "films/ActoresDetails";
+
+    }
+
+
+
+
     @GetMapping("/titulo")
     public String buscarFilmsPorTitulo(Model model, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam("titulo") String titulo) {
         Pageable pageable = PageRequest.of(page, 5);
@@ -159,6 +173,20 @@ public class FilmsController {
         model.addAttribute("page", pageRender);
         return "films/listFilm";
     }
+/*
+    @GetMapping("/listadoActores/{id}")
+    public String buscarActorPorFilm(Model model, @RequestParam(name="page", defaultValue="0") int page, @PathVariable("id") Integer id) {
+        Pageable pageable = PageRequest.of(page, 5);
+        Film film = filmsService.buscarFilmPorId(id);
+        List<Actor> listadoA = film.getActores();
+        Page<Actor> listado = new PageImpl<>(listadoA);
+        PageRender<Actor> pageRender = new PageRender<Actor>("/listado", listado);
+        model.addAttribute("titulo", "Listado de actores por film");
+        model.addAttribute("listadoActores", listado);
+        model.addAttribute("page", pageRender);
+        return "films/ActoresDetails";
+    }
+*/
 
 
     @PostMapping("/guardar/")

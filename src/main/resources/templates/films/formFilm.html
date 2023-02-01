@@ -78,6 +78,11 @@
                 <option th:value="Documental">Documental</option>
             </select>
         </div>
+
+        <img th:if="${film.imagen != null && #strings.length(film.imagen) > 0}" class="img-thumbnail rounded float-left"
+             style="max-width: 25%;" th:src="@{'/cfilms/uploads/' + ${film.imagen}}"
+             th:alt="${film.imagen}" />
+
         <div class="mb-3">
             <label for="file" class="col-sm-2 col-form-label">Imagen</label>
             <div class="col-sm-6">
@@ -86,6 +91,8 @@
         </div>
         <button type="submit" class="btn btn-dark">Guardar</button>
         <input type="hidden" th:field="*{idFilm}" />
+        <input type="hidden" th:field="*{imagen}"/>
+
     </form>
     <hr>
     <a class="btn btn-primary" role="button" th:href="@{/cfilms/}">Ir a Inicio</a>

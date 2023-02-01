@@ -34,14 +34,14 @@
 
         <ul class="nav justify-content-center nav-tabs" >
             <li class="nav-item" >
-              <a class="nav-link active" aria-current="page" href="#" >Ficha</a>
+              <a class="nav-link active" aria-current="page" th:href="@{/cfilms/idfilm/{id}(id=${film.idFilm})} ">Ficha</a>
             </li>
             <li class="nav-item">
               <!--critica selon idFilm-->
               <a class="nav-link" th:href="@{/criticas/film/{idfilm}(idfilm=${film.idFilm})} ">Criticas</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" th:href="@{/cfilms/reparto} ">Actores</a>
+              <a class="nav-link" th:href="@{/cfilms/idfilm/actor/{id}(id=${film.idFilm})} ">Actores</a>
             </li>
             <li class="nav-item">
               <a class="nav-link disabled">Disabled</a>
@@ -97,6 +97,31 @@
                   <p class="mr-5" > Sinopsis : </p>
                   <p th:text="${film.sinopsis}"></p>
                 </div>
+                <div class="d-flex">
+                  <p class="mr-5">Actores:</p>
+                  <div th:each="actor: ${film.actores}">
+                    <a th:href="@{/cfilms/idfilm/actor/{id}(id=${film.idFilm})}" th:text="${actor.nombre}"></a>
+                    <span th:if="!${actor_is_last}">,</span>
+                  </div>
+                </div>
+
+                <!--
+                <div class="d-flex">
+                  <p class="mr-5" > Actores : </p>
+
+                  <table>
+                    <tbody>
+                    <tr th:each="actor: ${film.actores}">
+                      <td th:text="${actor.nombre}"></td>
+
+                    </tr>
+                    </tbody>
+                  </table>
+
+
+                </div>
+!-->
+
 
 
 
