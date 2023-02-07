@@ -33,14 +33,28 @@
              placeholder="Escriba la pais_de_nacimiento del actor" required="required">
     </div>
 
+      <div class="mb-3">
+          <p th:if="${actor.paisDeNacimiento != null}">The films list is not null and contains the following:</p>
+
+          <p th:if="${actor.films == null}">The films list is null or empty.</p>
+      </div>
+
+     <div class="mb-3">
+         <label for="films" class="form-label">Films</label>
+         <select   class="form-control" th:field="*{films}" id="films" name="films[]" required="required">
+             <option
+                     th:each="film : ${listFilms}"
+                     th:value= " ${{ film }}"
+                     th:text="${film.titulo}"></option>
+         </select>
+     </div>
 
 
-
-      <button type="submit" class="btn btn-dark">Guardar</button>
-    <input type="hidden" th:field="*{idActor}"/>
-  </form>
-  <hr>
-  <a class="btn btn-primary" role="button" th:href="@{/cfilms/}">Ir a Inicio</a>   <a class="btn btn-outline-warning" role="button" th:href="@{/cactores/listado}">Volver</a>
+     <button type="submit" class="btn btn-dark">Guardar</button>
+   <input type="hidden" th:field="*{idActor}"/>
+ </form>
+ <hr>
+ <a class="btn btn-primary" role="button" th:href="@{/cfilms/}">Ir a Inicio</a>   <a class="btn btn-outline-warning" role="button" th:href="@{/cactores/listado}">Volver</a>
 
 </div>
 
@@ -53,22 +67,3 @@
 </html>
 
 
-
-
-
-
-
-
-    </div>
-
-
-
-
-  </form>
-
-
-
-</div>
-
-</body>
-</html>

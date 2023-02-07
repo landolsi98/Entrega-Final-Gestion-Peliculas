@@ -3,6 +3,7 @@ package es.uah.cFilmsActores.controller;
 import es.uah.cFilmsActores.model.Actor;
 import es.uah.cFilmsActores.model.Film;
 import es.uah.cFilmsActores.paginator.PageRender;
+import es.uah.cFilmsActores.service.IActoresService;
 import es.uah.cFilmsActores.service.IFilmsService;
 import es.uah.cFilmsActores.service.IUploadFileService;
 import org.slf4j.Logger;
@@ -33,6 +34,9 @@ public class FilmsController {
 
     @Autowired
     IFilmsService filmsService;
+
+    @Autowired
+    IActoresService actoresService;
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -89,7 +93,7 @@ public class FilmsController {
     public String AllFilms(Model model, @RequestParam(name = "page", defaultValue = "0") int page) {
         Pageable pageable = PageRequest.of(page, 30);
         Page<Film> all = filmsService.buscarTodos(pageable);
-        PageRender<Film> pageRender = new PageRender<Film>("/cfilms/listado", all);
+        PageRender<Film> pageRender = new PageRender<Film>("/cfilms/all", all);
         model.addAttribute("titulo", "Listado de todos los films");
         model.addAttribute("allFilms", all);
         model.addAttribute("page", pageRender);
@@ -113,10 +117,15 @@ public class FilmsController {
 
     }
 
+    @GetMapping("/idfilm/actorDetail/{id}")
+    public String buscarActorPorId(Model model, @PathVariable("id") Integer id) {
+        Actor actor = actoresService.buscarActorPorId(id);
+        model.addAttribute("actor", actor);
+        return "films/ActorDetails";
 
+    }
 
-
-    @GetMapping("/titulo")
+        @GetMapping("/titulo")
     public String buscarFilmsPorTitulo(Model model, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam("titulo") String titulo) {
         Pageable pageable = PageRequest.of(page, 5);
         Page<Film> listado;
@@ -129,7 +138,7 @@ public class FilmsController {
         model.addAttribute("titulo", "Listado de films por titulo");
         model.addAttribute("listadoFilms", listado);
         model.addAttribute("page", pageRender);
-        return "films/listFilm";
+        return "home";
     }
 
     @GetMapping("/genero")

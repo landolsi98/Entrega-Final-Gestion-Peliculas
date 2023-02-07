@@ -36,20 +36,21 @@
             <div class="col-sm-12" >
                 <br />
 
-                <h2 style="color: papayawhip" th:text="${film.titulo}" > </h2>
+                <h2 style="color: papayawhip" th:text="${actor.nombre}" > </h2>
                 <br />
 
                 <ul class="nav justify-content-center nav-tabs" >
                     <li class="nav-item" >
-                        <a class="nav-link active" aria-current="page" th:href="@{/cfilms/idfilm/{id}(id=${film.idFilm})} ">Ficha</a>
+                        <a class="nav-link active" aria-current="page"  >Actor Ficha</a>
                     </li>
-                    <li class="nav-item">
-                        <!--critica selon idFilm-->
-                        <a class="nav-link" th:href="@{/criticas/film/{idfilm}(idfilm=${film.idFilm})} ">Criticas</a>
+                    <!--
+                   <li class="nav-item">
+                      <a class="nav-link" th:href="@{/criticas/film/{idfilm}(idfilm=${film.idFilm})} ">Criticas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/cfilms/idfilm/actor/{id}(id=${film.idFilm})} ">Actores</a>
                     </li>
+                    -->
                     <li class="nav-item">
                         <a class="nav-link disabled">Disabled</a>
                     </li>
@@ -62,7 +63,7 @@
                             />
                         </div>
                         <div class="col-md-8">
-                            <div class="card-body" th:each="actor: ${film.actores}">
+                            <div class="card-body" >
                                 th:if {actor.idActor =
                                 <div class="d-flex">
                                     <p class="mr-5" > Nombre : </p>
@@ -79,8 +80,9 @@
 
                                 <td>
                                     <table>
-                                        <tbody> Films
+                                        <tbody> Films :
                                         <tr th:each="film: ${actor.films}">
+                                            </br>
                                             <td th:text="${film.titulo}"></td>
 
                                         </tr>

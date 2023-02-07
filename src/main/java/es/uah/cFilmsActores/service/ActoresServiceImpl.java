@@ -66,6 +66,7 @@ public class ActoresServiceImpl implements IActoresService {
         @Override
         public void inscribirFilm(Integer idActor, Integer idFilm) {
             template.getForObject(url+"/insc/"+ idActor+ "/"+idFilm, String.class);
+
         }
     }
 

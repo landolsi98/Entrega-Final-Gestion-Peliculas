@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Film {
-    private  Integer idFilm;
+    private Integer idFilm;
     private String titulo;
     private Integer ano;
     private String duracion;
@@ -23,7 +23,7 @@ public class Film {
     private List<Actor> actores;
 
 
-    public Film(Integer idFilm, String titulo, Integer ano, String duracion, String pais, String genero, String reparto, String idioma, String compania, String sinopsis, String direcion, String imagen){
+    public Film(Integer idFilm, String titulo, Integer ano, String duracion, String pais, String genero, String reparto, String idioma, String compania, String sinopsis, String direcion, String imagen) {
         this.idFilm = idFilm;
         this.titulo = titulo;
         this.ano = ano;
@@ -38,11 +38,12 @@ public class Film {
         this.imagen = imagen;
 
 
+    }
+
+    public Film() {
 
     }
-    public Film () {
 
-    }
     public Integer getIdFilm() {
         return idFilm;
     }
@@ -149,19 +150,40 @@ public class Film {
     }
 
 
-    @Override
+  /*  @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Film)) return false;
         Film film = (Film) o;
         return Objects.equals(idFilm, film.idFilm);
     }
-
-    @Override
+*/
+  /*  @Override
     public int hashCode() {
         return Objects.hash(idFilm);
     }
+*/
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 83 * hash + Objects.hashCode(this.idFilm);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Film other = (Film) obj;
+        if (!Objects.equals(this.idFilm, other.idFilm)) {
+            return false;
+        }
+        return true;
+    }
+
+
 }
-
-
-

@@ -17,8 +17,17 @@
                 <img id="ICON" th:src="@{/uploads/movieIcon.png}" alt="" width="50" height="40"  class="d-inline-block align-text-top-success">
                DiscoveryMovies
             </a>
+            <form th:action="@{/cfilms/titulo}" method="get">
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="titulo" name="titulo"
+                           placeholder="Escriba el nombre de la pelicula">
+                    <button type="submit" class="btn btn-dark">Buscar</button>
+
+                </div>
+            </form>
             <form class="d-flex">
-                <a  class="btn btn-outline-success" type="submit" role="button" th:href="@{/cfilms/buscar}"> Buscar </a>
+
+                <a  class="btn btn-outline-success" type="submit" role="button" th:href="@{/cfilms/buscar}"> Busqueda avanzada </a>
             </form>
 
         </div>

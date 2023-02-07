@@ -4,6 +4,7 @@ import es.uah.cFilmsActores.model.Actor;
 import es.uah.cFilmsActores.model.Film;
 import es.uah.cFilmsActores.paginator.PageRender;
 import es.uah.cFilmsActores.service.IActoresService;
+import es.uah.cFilmsActores.service.IFilmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +21,9 @@ public class ActoresController {
     @Autowired
     IActoresService actoresService;
 
+    @Autowired
+    IFilmsService filmsService;
+
     @GetMapping("/listado")
     public String listadoActores(Model model, @RequestParam(name="page", defaultValue = "0") int page) {
         Pageable pageable = PageRequest.of(page,6);
@@ -31,12 +35,16 @@ public class ActoresController {
         return "films/listActor";
     }
     @GetMapping("/nuevo")
-    public String nuevo(Model model) {
+    public String nuevo(Model model, @RequestParam(name = "page", defaultValue = "0") int page) {
         model.addAttribute("titulo", "Nuevo actor");
+        Pageable pageable = PageRequest.of(page, 30);
+        Page<Film> listado = filmsService.buscarTodos(pageable);
         Actor actor = new Actor();
         model.addAttribute("actor", actor);
+        model.addAttribute("listFilms", listado);
         return "films/formActor";
     }
+
     @PostMapping("/guardar/")
     public String guardarActor(Model model, Actor actor, RedirectAttributes attributes) {
         actoresService.guardarActor(actor);
@@ -57,7 +65,11 @@ public class ActoresController {
         attributes.addFlashAttribute("msg", "Los datos del actor fueron borrados!");
         return "redirect:/cactores/listado";
     }
-
+    @GetMapping("/insc/{ida}/{idf}")
+    public String inscribirFilm(@PathVariable("ida") Integer ida,
+                              @PathVariable("idf") Integer idf) {
+        actoresService.inscribirFilm(ida, idf);
+        return "films/formActor";
+    }
 }
-
 

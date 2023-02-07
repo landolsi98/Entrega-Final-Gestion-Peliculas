@@ -11,6 +11,8 @@ public interface ICriticasService {
 
     Page<Critica> findAll(Pageable pageable);
 
+    List<Critica> findCriticasByIdFilm(Integer idFilm);
+
     Page<Critica> findCriticaByIdFilm(Integer idFilm, Pageable pageable);
 
     Critica findCriticaById(Integer idCritica);

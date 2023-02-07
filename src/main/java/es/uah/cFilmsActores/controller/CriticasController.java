@@ -2,8 +2,10 @@ package es.uah.cFilmsActores.controller;
 
 
 import es.uah.cFilmsActores.model.Critica;
+import es.uah.cFilmsActores.model.Film;
 import es.uah.cFilmsActores.paginator.PageRender;
 import es.uah.cFilmsActores.service.ICriticasService;
+import es.uah.cFilmsActores.service.IFilmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/criticas")
 public class CriticasController {
@@ -20,6 +24,8 @@ public class CriticasController {
     @Autowired
     ICriticasService criticasService;
 
+    @Autowired
+    IFilmsService filmsService;
 
     @GetMapping("/all")
     public String criticasList(Model model, @RequestParam(name="page", defaultValue = "0") int page) {
@@ -44,22 +50,45 @@ public class CriticasController {
         model.addAttribute("critica", critica);
         return "formCritica";
     }
+    /*
+        @GetMapping("/film/{idfilm}")
+       public String findCriticaByIdFilm(Model model, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(value = "idfilm" , required = false) Integer idFilm) {
+           Pageable pageable = PageRequest.of(page, 30);
+           Page<Critica> all;
+           if (idFilm != null) {
+               all = criticasService.findAll(pageable);
+           } else {
+               all = criticasService.findCriticaByIdFilm(idFilm, pageable);
+           }
+           PageRender<Critica> pageRender = new PageRender<Critica>("/all", all);
+           model.addAttribute("title", "Listado de criticas por idFilm");
+           model.addAttribute("FilmCriticas", all);
+           model.addAttribute("film" , all);
+           model.addAttribute("page", pageRender);
+           return "criticas/CriticasDetails";
+       }
+
+   */
 
     @GetMapping("/film/{idfilm}")
-    public String findCriticaByIdFilm(Model model, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(value = "idfilm" , required = false) Integer idFilm) {
-        Pageable pageable = PageRequest.of(page, 30);
-        Page<Critica> all;
-        if (idFilm.equals("")) {
-            all = criticasService.findAll(pageable);
-        } else {
-            all = criticasService.findCriticaByIdFilm(idFilm, pageable);
+    public String findCriticasByIdFilm(Model model, @PathVariable("idfilm" ) int idFilm) {
+        List<Critica> all = criticasService.findCriticasByIdFilm(idFilm);
+        Film film = filmsService.buscarFilmPorId(idFilm);
+        float x = 0 ;
+        int y = 0;
+
+        for (Critica critica : all) {
+          x =  x +  critica.getNota();
+          y = y+1 ;
         }
-        PageRender<Critica> pageRender = new PageRender<Critica>("/all", all);
+        x = x/y;
+        model.addAttribute("film", film);
+        model.addAttribute("notaMedia", x);
         model.addAttribute("title", "Listado de criticas por idFilm");
         model.addAttribute("FilmCriticas", all);
-        model.addAttribute("page", pageRender);
-        return "FilmDetails";
+        return "criticas/CriticasDetails";
     }
+
 
 
 
