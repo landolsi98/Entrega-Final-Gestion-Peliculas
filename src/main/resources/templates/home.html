@@ -15,19 +15,12 @@
         <div class="container-fluid">
             <a class="navbar-brand" th:href="@{/cfilms/}">
                 <img id="ICON" th:src="@{/uploads/movieIcon.png}" alt="" width="50" height="40"  class="d-inline-block align-text-top-success">
-               DiscoveryMovies
+                DiscoveryMovies
             </a>
-            <form th:action="@{/cfilms/titulo}" method="get">
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="titulo" name="titulo"
-                           placeholder="Escriba el nombre de la pelicula">
-                    <button type="submit" class="btn btn-dark">Buscar</button>
-
-                </div>
-            </form>
-            <form class="d-flex">
-
-                <a  class="btn btn-outline-success" type="submit" role="button" th:href="@{/cfilms/buscar}"> Busqueda avanzada </a>
+            <form th:action="@{/cfilms/titulo}" method="get" class="d-flex" >
+                <input style="width: 70%" type="text" class="form-control" id="titulo" name="titulo"
+                       placeholder="Busca tu pelicula ">
+                <button type="submit" class="btn btn-dark">Buscar </button>  <a style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .65rem;" class="btn btn-outline-success" type="submit" role="button" th:href="@{/cfilms/buscar}"> Busqueda avanazada </a>
             </form>
 
         </div>
@@ -36,8 +29,8 @@
 
 <br>
 <div class="container text-center" >
-    <h2 style="color: ghostwhite ; font-size: 45px "  >  Movies Discovery</h2>
-    <h3 style="color: ghostwhite ; font-size: 15px ">descubre antes de ver </h3>
+    <h2 style="color: papayawhip ; font-size: 45px "  >  Movies Discovery</h2>
+    <h3 style="color: papayawhip ; font-size: 15px ">descubre antes de ver </h3>
     <div class="row row-cols-4" >
         <div class="col"th:each="film : ${listadoFilms}">
             <br>
@@ -56,6 +49,22 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script th:src="@{/js/bootstrap.min.js}"></script>
+
+<footer style="background-color: #6b6868; margin-top: 50px; color: white; padding: 20px;">
+    <div style="display: flex; justify-content: space-between;">
+        <div>
+            <h3 style="margin: 0; font-size: 25px "> Movies Discovery</h3>
+            <p style="margin: 0; font-size: 15px">Explore the latest and greatest films</p>
+        </div>
+        <div style="margin-top: 20px;">
+            <a th:href="@{/cfilms/}" style="color: white; margin-bottom: 10px;">Home</a>
+            <a href="#" style="color: white; margin-bottom: 10px;">About</a>
+            <a href="#" style="color: white; margin-bottom: 10px;">Contact</a>
+        </div>
+    </div>
+    <p style="margin: 20px 0 0 0; text-align: center;">Copyright &copy; Landolsi Jawher 2023</p>
+</footer>
+
 
 </body>
 </html>

@@ -16,16 +16,10 @@
         <img id="ICON" th:src="@{/uploads/movieIcon.png}" alt="" width="50" height="40"  class="d-inline-block align-text-top-success">
         DiscoveryMovies
       </a>
-      <form th:action="@{/cfilms/titulo}" method="get">
-        <div class="mb-3">
-          <input type="text" class="form-control" id="titulo" name="titulo"
-                 placeholder="Escriba el nombre de la pelicula">
-          <button type="submit" class="btn btn-dark">Buscar</button>
-
-        </div>
-      </form>
-      <form class="d-flex">
-        <a  class="btn btn-outline-success" type="submit" role="button" th:href="@{/cfilms/buscar}"> Busqueda avanazada </a>
+      <form th:action="@{/cfilms/titulo}" method="get" class="d-flex" >
+        <input style="width: 70%" type="text" class="form-control" id="titulo" name="titulo"
+               placeholder="Busca tu pelicula ">
+        <button type="submit" class="btn btn-dark">Buscar </button>  <a style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .65rem;" class="btn btn-outline-success" type="submit" role="button" th:href="@{/cfilms/buscar}"> Busqueda avanazada </a>
       </form>
 
     </div>
@@ -85,8 +79,11 @@
                   <p th:text="${film.direcion}"></p>
                 </div>
                 <div class="d-flex">
-                  <p class="mr-5" > Reparto : </p>
-                  <p th:text="${film.reparto}"></p>
+                  <p class="mr-5">Actores:</p>
+                  <div th:each="actor: ${film.actores}">
+                    <a th:href="@{/cfilms/idfilm/actorDetail/{id}/(id=${actor.idActor})}" th:text="${actor.nombre}"></a>
+                    <span th:if="!${actor_is_last}"> ,  </span>
+                  </div>
                 </div>
 
                 <div class="d-flex">
@@ -106,13 +103,7 @@
                   <p th:text="${film.sinopsis}"></p>
                 </div>
 
-                <div class="d-flex">
-                  <p class="mr-5">Actores:</p>
-                  <div th:each="actor: ${film.actores}">
-                    <a th:href="@{/cfilms/idfilm/actorDetail/{id}/(id=${actor.idActor})}" th:text="${actor.nombre}"></a>
-                    <span th:if="!${actor_is_last}"> ,  </span>
-                  </div>
-                </div>
+
 
                 <!--
                 <div class="d-flex">

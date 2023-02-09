@@ -82,9 +82,10 @@ public class CriticasController {
           y = y+1 ;
         }
         x = x/y;
+        String formattedValue = String.format("%.2f", x);
         model.addAttribute("film", film);
-        model.addAttribute("notaMedia", x);
-        model.addAttribute("title", "Listado de criticas por idFilm");
+        model.addAttribute("notaMedia", formattedValue);
+        model.addAttribute("title", "Criticas ");
         model.addAttribute("FilmCriticas", all);
         return "criticas/CriticasDetails";
     }

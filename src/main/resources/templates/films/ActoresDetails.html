@@ -16,17 +16,12 @@
                 <img id="ICON" th:src="@{/uploads/movieIcon.png}" alt="" width="50" height="40"  class="d-inline-block align-text-top-success">
                 DiscoveryMovies
             </a>
-            <form th:action="@{/cfilms/titulo}" method="get">
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="titulo" name="titulo"
-                           placeholder="Escriba el nombre de la pelicula">
-                    <button type="submit" class="btn btn-dark">Buscar</button>
+            <form th:action="@{/cfilms/titulo}" method="get" class="d-flex" >
+                <input style="width: 70%" type="text" class="form-control" id="titulo" name="titulo"
+                       placeholder="Busca tu pelicula ">
+                <button type="submit" class="btn btn-dark">Buscar </button>  <a style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .65rem; color: #06357a " class="btn btn-outline"  type="submit" role="button" th:href="@{/cfilms/buscar}"> Busqueda avanazada </a>
+            </form>
 
-                </div>
-            </form>
-            <form class="d-flex">
-                <a  class="btn btn-outline-success" type="submit" role="button" th:href="@{/cfilms/buscar}"> Busqueda avanazada </a>
-            </form>
         </div>
     </nav>
 </div>
@@ -41,14 +36,14 @@
 
                 <ul class="nav justify-content-center nav-tabs" >
                     <li class="nav-item" >
-                        <a class="nav-link active" aria-current="page" th:href="@{/cfilms/idfilm/{id}(id=${film.idFilm})} ">Ficha</a>
+                        <a class="nav-link " aria-current="page" th:href="@{/cfilms/idfilm/{id}(id=${film.idFilm})} ">Ficha</a>
                     </li>
                     <li class="nav-item">
                         <!--critica selon idFilm-->
                         <a class="nav-link" th:href="@{/criticas/film/{idfilm}(idfilm=${film.idFilm})} ">Criticas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/cfilms/idfilm/actor/{id}(id=${film.idFilm})} ">Actores</a>
+                        <a class="nav-link active" th:href="@{/cfilms/idfilm/actor/{id}(id=${film.idFilm})} ">Actores</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link disabled">Disabled</a>
@@ -63,7 +58,7 @@
                         </div>
                         <div class="col-md-8">
                             <div class="card-body" th:each="actor: ${film.actores}">
-                                th:if {actor.idActor =
+
                                 <div class="d-flex">
                                     <p class="mr-5" > Nombre : </p>
                                     <p th:text="${actor.nombre}"></p>
@@ -77,22 +72,19 @@
                                     <p th:text="${actor.paisDeNacimiento}"></p>
                                 </div>
 
-                                <td>
-                                    <table>
-                                        <tbody> Films
-                                        <tr th:each="film: ${actor.films}">
-                                            <td th:text="${film.titulo}"></td>
-
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                            <!--    <td> Films:
+                                    <ul>
+                                        <li  th:each="film: ${actor.films}"  class="films" th:text="${film.titulo}" ></li>
+                                    </ul>
                                 </td>
+                            </div>
+
+-->
 
 
 
 
-
-                                <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+                            <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
                             </div>
                         </div>
                     </div>

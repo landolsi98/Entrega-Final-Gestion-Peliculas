@@ -34,8 +34,14 @@ body {
     margin-left: 15px;
     margin-right: 10px;
     font-size: 15px;
-
 }
+.films {
+    color: rgba(38, 156, 236, 0.55);
+    margin-left: 15px;
+    margin-right: 10px;
+    font-size: 15px;
+}
+
 #navbar{
     color: white;
 }

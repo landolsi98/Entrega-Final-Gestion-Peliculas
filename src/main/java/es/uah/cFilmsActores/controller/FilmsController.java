@@ -149,7 +149,7 @@ public class FilmsController {
         model.addAttribute("titulo", "Listado de films por genero");
         model.addAttribute("listadoFilms", listado);
         model.addAttribute("page", pageRender);
-        return "films/listFilm";
+        return "home";
     }
 
     @GetMapping("/idioma")
@@ -165,7 +165,7 @@ public class FilmsController {
         model.addAttribute("titulo", "Listado de films por idioma");
         model.addAttribute("listadoFilms", listado);
         model.addAttribute("page", pageRender);
-        return "films/listFilm";
+        return "home";
     }
     @GetMapping("/reparto")
     public String buscarFilmsPorReparto(Model model, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam("reparto") String reparto) {
@@ -180,7 +180,7 @@ public class FilmsController {
         model.addAttribute("titulo", "Listado de films por actor");
         model.addAttribute("listadoFilms", listado);
         model.addAttribute("page", pageRender);
-        return "films/listFilm";
+        return "home";
     }
 /*
     @GetMapping("/listadoActores/{id}")
