@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="es">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="es"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <title>DiscoveryMovies | Aplicación de gestion de fichas de peliculas</title>
@@ -10,18 +11,41 @@
 <body>
 <div>
   <!--navbar-->
-  <nav id="navbar" class="navbar" style="background-color: darkgray;">
+  <nav class="navbar navbar-expand-lg " style="background-color: darkgray;">
     <div class="container-fluid">
       <a class="navbar-brand" th:href="@{/cfilms/}">
         <img id="ICON" th:src="@{/uploads/movieIcon.png}" alt="" width="50" height="40"  class="d-inline-block align-text-top-success">
         DiscoveryMovies
       </a>
-      <form th:action="@{/cfilms/titulo}" method="get" class="d-flex" >
-        <input style="width: 70%" type="text" class="form-control" id="titulo" name="titulo"
-               placeholder="Busca tu pelicula ">
-        <button type="submit" class="btn btn-dark">Buscar </button>  <a style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .65rem;" class="btn btn-outline-success" type="submit" role="button" th:href="@{/cfilms/buscar}"> Busqueda avanazada </a>
-      </form>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a  class="nav-link active" aria-current="page" th:href="@{/cactores/listado/}" sec:authorize="hasAuthority('Admin')"> Actores</a>
+          </li>
+          <li class="nav-item">
+            <a  class="nav-link active" th:href="@{/criticas/all/}" sec:authorize="hasAuthority('Admin')"> Criticas</a>
+          </li>
+          <li class="nav-item">
+            <a  class="nav-link active" th:href="@{/users/all/}" sec:authorize="hasAuthority('Admin')"> Usuarios</a>
+          </li>
+          <form th:action="@{/cfilms/titulo}" method="get" class="d-flex" style="margin-left: 3cm;">
+            <input style="width: 70% ; height: 80%" type="text" class="form-control" id="titulo" name="titulo" placeholder="Busca tu pelicula ">
+            <button type="submit" class="btn btn-dark btn-sm" style="--bs-btn-padding-y: .25rem; height: 80% ; width: 35%; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Buscar</button>
+            <a style="--bs-btn-padding-y: .25rem; line-height: 1; height: 90% ; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" class="btn btn-outline-success" type="submit" role="button" th:href="@{/cfilms/buscar}">Busqueda avanzada</a>
+          </form>
 
+        </ul>
+        <div class="btn-group dropstart">
+          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #052959; color: papayawhip; border-radius: 50%; width: 55px; padding-top: 15px; height: 55px; text-align: center; display: flex; align-items: center; justify-content: center;">
+            <p style="font-size: 14px" th:text="${Username}"> </p>
+          </button>
+          <ul style="background-color: papayawhip" class="dropdown-menu">
+            <li><a class="dropdown-item"th:href="@{/cfilms/}"> Home</a></li>
+            <li><a class="dropdown-item" th:href="@{/logout/}">Logout</a></li>
+            <li><a class="dropdown-item" href="#">Mas..</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </nav>
 </div>
@@ -36,17 +60,16 @@
 
         <ul class="nav justify-content-center nav-tabs" >
             <li class="nav-item" >
-              <a class="nav-link active" aria-current="page" th:href="@{/cfilms/idfilm/{id}(id=${film.idFilm})} ">Ficha</a>
+              <a class="nav-link active" aria-current="page" th:href="@{/cfilms/idfilm/{id}(id=${film.idFilm})}" style="padding-right: 15px">Ficha</a>
             </li>
             <li class="nav-item">
-              <!--critica selon idFilm-->
-              <a class="nav-link" th:href="@{/criticas/film/{idfilm}(idfilm=${film.idFilm})} ">Criticas</a>
+              <a class="nav-link" th:href="@{/criticas/film/{idfilm}(idfilm=${film.idFilm})}  " style="padding-right: 15px">Criticas</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" th:href="@{/cfilms/idfilm/actor/{id}(id=${film.idFilm})} ">Actores</a>
+              <a class="nav-link" th:href="@{/cfilms/idfilm/actor/{id}(id=${film.idFilm})} " style="padding-right: 15px">Actores</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link disabled">Disabled</a>
+              <a class="nav-link disabled" style="padding-right: 15px">Disabled</a>
             </li>
           </ul>
         </a>
@@ -102,6 +125,47 @@
                   <p class="mr-5" > Sinopsis : </p>
                   <p th:text="${film.sinopsis}"></p>
                 </div>
+
+                <div class="critique-area">
+                  <h3>Deja tu critica</h3>
+                  <form th:action="@{/criticas/save}" method="post">
+                    <div class="form-group">
+                      <label for="username">Nombre de usuario</label>
+                      <input  type="text" class="form-control" id="username" name="username" placeholder="Ingresa tu nombre de usuario" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="nota1">Nota (1-10):</label><br>
+                      <input type="radio" id="nota1" name="nota" value="1">
+                      <label for="nota2">1</label><br>
+                      <input type="radio" id="nota2" name="nota" value="2">
+                      <label for="nota3">2</label><br>
+                      <input type="radio" id="nota3" name="nota" value="3">
+                      <label for="nota4">3</label><br>
+                      <input type="radio" id="nota4" name="nota" value="4">
+                      <label for="nota5">4</label><br>
+                      <input type="radio" id="nota5" name="nota" value="5">
+                      <label for="nota6">5</label><br>
+                      <input type="radio" id="nota6" name="nota" value="6">
+                      <label for="nota7">6</label><br>
+                      <input type="radio" id="nota7" name="nota" value="7">
+                      <label for="nota8">7</label><br>
+                      <input type="radio" id="nota8" name="nota" value="8">
+                      <label for="nota9">8</label><br>
+                      <input type="radio" id="nota9" name="nota" value="9">
+                      <label for="nota10">9</label><br>
+                      <input type="radio" id="nota10" name="nota" value="10">
+                      <label for="nota10">10</label>
+                    </div>
+                    <div class="form-group">
+                      <label for="valoracion">Critica</label>
+                      <textarea class="form-control" id="valoracion" name="valoracion" placeholder="Escribe tu critica aquí" rows="3" required></textarea>
+                    </div>
+                    <input type="hidden" th:value="${film.idFilm}" name="idFilm">
+                    <input type="hidden" id="fecha" name="fecha" value="">
+                    <button type="submit" class="btn btn-primary" onclick="document.getElementById('fecha').value = new Date().toISOString().substr(0, 10)">Enviar</button>
+                  </form>
+                </div>
+
 
 
 

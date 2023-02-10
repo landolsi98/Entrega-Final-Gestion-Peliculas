@@ -1,11 +1,52 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<html xmlns:th="http://www.thymeleaf.org" lang="es"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
 <head>
     <meta charset="UTF-8">
     <title>DiscoveryMovies | Aplicación de gestion de fichas de peliculas - Listado Actores</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 </head>
 <body>
+<div>
+    <nav class="navbar navbar-expand-lg " style="background-color: darkgray;">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/cfilms/}">
+                <img id="ICON" th:src="@{/uploads/movieIcon.png}" alt="" width="50" height="40"  class="d-inline-block align-text-top-success">
+                DiscoveryMovies
+            </a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a  class="nav-link active" aria-current="page" th:href="@{/cactores/listado/}" sec:authorize="hasAuthority('Admin')"> Actores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a  class="nav-link active" th:href="@{/criticas/all/}" sec:authorize="hasAuthority('Admin')"> Criticas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a  class="nav-link active" th:href="@{/users/all/}" sec:authorize="hasAuthority('Admin')"> Usuarios</a>
+                    </li>
+                    <form th:action="@{/cfilms/titulo}" method="get" class="d-flex" style="margin-left: 3cm;">
+                        <input style="width: 70% ; height: 80%" type="text" class="form-control" id="titulo" name="titulo" placeholder="Busca tu pelicula ">
+                        <button type="submit" class="btn btn-dark btn-sm" style="--bs-btn-padding-y: .25rem; height: 80% ; width: 35%; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">Buscar</button>
+                        <a style="--bs-btn-padding-y: .25rem; line-height: 1; height: 90% ; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem;" class="btn btn-outline-success" type="submit" role="button" th:href="@{/cfilms/buscar}">Busqueda avanzada</a>
+                    </form>
+
+                </ul>
+                <div class="btn-group dropstart">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #052959; color: papayawhip; border-radius: 50%; width: 55px; padding-top: 15px; height: 55px; text-align: center; display: flex; align-items: center; justify-content: center;">
+                        <p style="font-size: 14px" th:text="${Username}"> </p>
+                    </button>
+                    <ul style="background-color: papayawhip" class="dropdown-menu">
+                        <li><a class="dropdown-item"th:href="@{/cfilms/}"> Home</a></li>
+                        <li><a class="dropdown-item" th:href="@{/logout/}">Logout</a></li>
+                        <li><a class="dropdown-item" href="#">Mas..</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+</div>
 
 <div class="container">
     <div class="card">
@@ -23,7 +64,7 @@
                     <th scope="col">Nombre</th>
                     <th scope="col">Fecha de nacimiento</th>
                     <th scope="col">Pais de nacimiento</th>
-                    <th scope="col">Peliculas</th>
+                    <th  scope="col">Peliculas</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -33,7 +74,7 @@
                     <td th:text="${actor.fechaDeNacimiento}"></td>
                     <td th:text="${actor.paisDeNacimiento}"></td>
 
-                    <td>
+                    <td  >
                         <table>
                             <tbody>
                             <tr th:each="film: ${actor.films}">
@@ -44,7 +85,8 @@
                         </table>
                     </td>
 
-                    <td>
+                    <td >
+
                         <a th:href="@{/cactores/editar/{id}  (id=${actor.idActor})  }" th:text="'editar'"
                            class="btn btn-secondary btn-sm" role="button" title="Editar actor."><i
                                 class="fas fa-pencil-alt" aria-hidden="true"></i></a>

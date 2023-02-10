@@ -3,6 +3,7 @@ package es.uah.cFilmsActores.controller;
 
 import es.uah.cFilmsActores.model.Critica;
 import es.uah.cFilmsActores.model.Film;
+import es.uah.cFilmsActores.model.User;
 import es.uah.cFilmsActores.paginator.PageRender;
 import es.uah.cFilmsActores.service.ICriticasService;
 import es.uah.cFilmsActores.service.IFilmsService;
@@ -15,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -102,14 +104,16 @@ public class CriticasController {
         return "criticas/formCritica";
 
 }
-
     @PostMapping("/save")
-    public String saveCritica(Model model, Critica critica, RedirectAttributes attributes) {
+    public String saveCritica(Model model, Critica critica, RedirectAttributes attributes, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        critica.setIdUser(user.getIdUser());
         criticasService.saveCritica(critica);
         model.addAttribute("title", "Nueva critica");
-        attributes.addFlashAttribute("msg", "Los datos de la critica  fueron guardados!");
-        return "redirect:/criticas/all";
+        attributes.addFlashAttribute("msg", "Los datos de la critica fueron guardados!");
+        return "redirect:FilmDetails";
     }
+
 
     @GetMapping("/edit/{id}")
     public String editCritica(Model model, @PathVariable("id") Integer id) {

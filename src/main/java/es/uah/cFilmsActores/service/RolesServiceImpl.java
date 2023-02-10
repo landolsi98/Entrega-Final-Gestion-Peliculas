@@ -15,7 +15,7 @@ public class RolesServiceImpl implements IRolesService{
     RestTemplate template;
 
 
-    String url = "http://localhost:8090/api/criticas/roles";
+    String url = "http://localhost:8002/roles";
 
     @Override
     public List<Rol> findAll() {

@@ -19,13 +19,15 @@ public class Critica {
 
     private User user;
 
+    private Integer idUser;
 
-    public Critica(Integer idFilm, String valoracion, Integer nota, Date fecha, User user) {
+    public Critica(Integer idFilm, String valoracion, Integer nota, Date fecha, User user , Integer idUser)   {
         this.idFilm = idFilm;
         this.valoracion = valoracion;
         this.nota = nota;
         this.fecha = fecha;
         this.user = user;
+        this.idUser = idUser;
     }
 
 
@@ -80,6 +82,14 @@ public class Critica {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Integer getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(Integer idUser) {
+        this.idUser = idUser;
     }
 
     @Override

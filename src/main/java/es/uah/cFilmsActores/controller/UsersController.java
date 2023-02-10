@@ -45,7 +45,9 @@ public String usersList (Model model, @RequestParam(name = "page", defaultValue 
 
 @GetMapping("/newUser")
     public String newUser (Model model) {
+    List<Rol> roles = rolesService.findAll();
     model.addAttribute("title", "nuevo usuario");
+    model.addAttribute("allRoles", roles);
     User user = new User();
     model.addAttribute("user", user);
     return "users/formUsers";
@@ -61,7 +63,7 @@ public String usersList (Model model, @RequestParam(name = "page", defaultValue 
     public String findUserById (Model model, @PathVariable("id") Integer id) {
     User user = usersService.findUserById(id);
     model.addAttribute("user", user);
-    return "formUsers";
+    return "users/formUsers";
             }
 
     @GetMapping ("/username")
@@ -84,11 +86,14 @@ public String usersList (Model model, @RequestParam(name = "page", defaultValue 
 
     @PostMapping("/save")
     public String saveUser(Model model, User user,   RedirectAttributes attributes)  {
+    List<Rol> roles = rolesService.findAll();
+    model.addAttribute("allRoles" , roles);
     usersService.saveUser(user);
     model.addAttribute("title", "nuevo usuario");
     attributes.addFlashAttribute("msg", "los datos del usuario fueron guardados !");
     return "redirect:/users/all";
     }
+
     @GetMapping("/registrarme")
     public String nuevoRegistro(Model model) {
         model.addAttribute("title", "Nuevo registro");
@@ -105,7 +110,7 @@ public String usersList (Model model, @RequestParam(name = "page", defaultValue 
         }
         user.setEnable(true);
         Rol rol = rolesService.findRolById(1);
-        user.setRoles(Arrays.asList(rol));
+        user.setRol(rol);
         usersService.saveUser(user);
         attributes.addFlashAttribute("msg", "Los datos del registro fueron guardados!");
         return "redirect:/login";

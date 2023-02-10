@@ -61,12 +61,12 @@ public class UsersServiceImpl  implements IUsersService {
         return user;
     }
 
-/*    @Override
+    @Override
     public User login(String email, String password) {
         User user = template.getForObject(url + "/login/" + email + "/" + password,User.class);
         return user;
     }
-*/
+
     @Override
     public void saveUser(User user) {
         if (user.getIdUser() != null && user.getIdUser() > 0) {
