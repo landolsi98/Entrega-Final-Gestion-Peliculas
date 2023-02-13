@@ -6,6 +6,9 @@
   <title>DiscoveryMovies | Aplicación de gestion de fichas de peliculas</title>
   <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
   <link th:href="@{/css/style.css}" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2/dist/umd/popper.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css">
+
 
 </head>
 <body>
@@ -20,13 +23,13 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a  class="nav-link active" aria-current="page" th:href="@{/cactores/listado/}" sec:authorize="hasAuthority('Admin')"> Actores</a>
+            <a style="text-decoration: underline;" class="nav-link active" aria-current="page" th:href="@{/cactores/listado/}" sec:authorize="hasAuthority('Admin')"> Actores</a>
           </li>
           <li class="nav-item">
-            <a  class="nav-link active" th:href="@{/criticas/all/}" sec:authorize="hasAuthority('Admin')"> Criticas</a>
+            <a style="text-decoration: underline;"  class="nav-link active" th:href="@{/criticas/all/}" sec:authorize="hasAuthority('Admin')"> Criticas</a>
           </li>
           <li class="nav-item">
-            <a  class="nav-link active" th:href="@{/users/all/}" sec:authorize="hasAuthority('Admin')"> Usuarios</a>
+            <a style="text-decoration: underline;" class="nav-link active" th:href="@{/users/all/}" sec:authorize="hasAuthority('Admin')"> Usuarios</a>
           </li>
           <form th:action="@{/cfilms/titulo}" method="get" class="d-flex" style="margin-left: 3cm;">
             <input style="width: 70% ; height: 80%" type="text" class="form-control" id="titulo" name="titulo" placeholder="Busca tu pelicula ">
@@ -35,19 +38,27 @@
           </form>
 
         </ul>
-        <div class="btn-group dropstart">
-          <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #052959; color: papayawhip; border-radius: 50%; width: 55px; padding-top: 15px; height: 55px; text-align: center; display: flex; align-items: center; justify-content: center;">
-            <p style="font-size: 14px" th:text="${Username}"> </p>
-          </button>
-          <ul style="background-color: papayawhip" class="dropdown-menu">
-            <li><a class="dropdown-item"th:href="@{/cfilms/}"> Home</a></li>
-            <li><a class="dropdown-item" th:href="@{/logout/}">Logout</a></li>
-            <li><a class="dropdown-item" href="#">Mas..</a></li>
-          </ul>
+        <div th:if="${Username != null}">
+          <div class="btn-group dropstart">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #052959; color: papayawhip; border-radius: 50%; width: 55px; padding-top: 15px; height: 55px; text-align: center; display: flex; align-items: center; justify-content: center;">
+              <p style="font-size: 14px" th:text="${Username}"> </p>
+            </button>
+            <ul style="background-color: papayawhip" class="dropdown-menu">
+              <li><a class="dropdown-item"th:href="@{/cfilms/}"> Home</a></li>
+              <li><a class="dropdown-item" th:href="@{/logout/}">Logout</a></li>
+              <li><a class="dropdown-item" href="#">Mas..</a></li>
+            </ul>
+          </div>
         </div>
+        <div th:if="${Username == null}">
+          <a  class="btn btn-primary" style="background-color:papayawhip; color: #091B29" role="button" th:href="@{/login/}"> Iniciar sesión </a>  | <a  class="btn btn-primary" style="background-color:papayawhip ; color: #091B29" role="button" th:href="@{/users/registrarme/}">Registrarse </a>
+
+        </div>
+
       </div>
     </div>
   </nav>
+
 </div>
 <div class="homepage--hero">
   <div class="container  ">
@@ -133,29 +144,12 @@
                       <label for="username">Nombre de usuario</label>
                       <input  type="text" class="form-control" id="username" name="username" placeholder="Ingresa tu nombre de usuario" required>
                     </div>
-                    <div class="form-group">
-                      <label for="nota1">Nota (1-10):</label><br>
-                      <input type="radio" id="nota1" name="nota" value="1">
-                      <label for="nota2">1</label><br>
-                      <input type="radio" id="nota2" name="nota" value="2">
-                      <label for="nota3">2</label><br>
-                      <input type="radio" id="nota3" name="nota" value="3">
-                      <label for="nota4">3</label><br>
-                      <input type="radio" id="nota4" name="nota" value="4">
-                      <label for="nota5">4</label><br>
-                      <input type="radio" id="nota5" name="nota" value="5">
-                      <label for="nota6">5</label><br>
-                      <input type="radio" id="nota6" name="nota" value="6">
-                      <label for="nota7">6</label><br>
-                      <input type="radio" id="nota7" name="nota" value="7">
-                      <label for="nota8">7</label><br>
-                      <input type="radio" id="nota8" name="nota" value="8">
-                      <label for="nota9">8</label><br>
-                      <input type="radio" id="nota9" name="nota" value="9">
-                      <label for="nota10">9</label><br>
-                      <input type="radio" id="nota10" name="nota" value="10">
-                      <label for="nota10">10</label>
-                    </div>
+                    <select>
+                      <option th:each="i : ${#numbers.sequence(0,9)}"
+                              th:value="${i}"
+                              th:text="${i}">
+                      </option>
+                    </select>
                     <div class="form-group">
                       <label for="valoracion">Critica</label>
                       <textarea class="form-control" id="valoracion" name="valoracion" placeholder="Escribe tu critica aquí" rows="3" required></textarea>

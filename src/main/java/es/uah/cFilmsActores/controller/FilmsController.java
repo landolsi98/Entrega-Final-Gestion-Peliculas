@@ -18,6 +18,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +31,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.security.Principal;
+import java.util.Base64;
 import java.util.List;
 
 
@@ -49,8 +52,11 @@ public class FilmsController {
     @Autowired
     private IUploadFileService uploadFileService;
 
+
+
     @GetMapping("/uploads/{filename:.+}")
     public ResponseEntity<Resource> verFoto(@PathVariable String filename) {
+
 
         Resource recurso = null;
 
@@ -86,16 +92,18 @@ public class FilmsController {
     }
 
     @GetMapping(value = {"/", "/home", ""})
-    public String listadoFilms(Model model, Principal principal, @RequestParam(name = "page", defaultValue = "0") int page) {
-        String email = principal.getName();
-        String Username = email.substring(0, email.indexOf("@"));
+    public String listadoFilms(Model model , Principal principal, @RequestParam(name = "page", defaultValue = "0") int page) {
+        if (principal != null){
+            String email = principal.getName();
+            String Username = email.substring(0, email.indexOf("@"));
+            model.addAttribute("Username", Username);
+        }
         Pageable pageable = PageRequest.of(page, 30);
         Page<Film> listado = filmsService.buscarTodos(pageable);
         PageRender<Film> pageRender = new PageRender<Film>("/cfilms/listado", listado);
         model.addAttribute("titulo", "Listado de todos los films");
         model.addAttribute("listadoFilms", listado);
         model.addAttribute("page", pageRender);
-        model.addAttribute("Username", Username);
 
         return "home";
 

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
@@ -17,6 +16,15 @@ import java.security.Principal;
 @Controller
 public class LoginController {
 
+   /* @GetMapping("/")
+    public String home(Principal principal) {
+        if (principal != null) {
+            return "redirect:/cfilms";
+        } else {
+            return "";
+        }
+    }
+*/
 @GetMapping ("/login")
     public String login (@RequestParam (value = "error", required = false) String error , Model model, Principal principal1) {
 
@@ -24,8 +32,10 @@ public class LoginController {
         UserDetails userDetails = (UserDetails) ((Authentication) principal1).getPrincipal();
         model.addAttribute("username", userDetails.getUsername());
 
+
         return "redirect:/cfilms";
     }
+
     if (error != null) {
         model.addAttribute("error" , "Error al iniciar sesion : Correo o contraseña incorrecta , por favor vuelva a intentarlo!");
     }

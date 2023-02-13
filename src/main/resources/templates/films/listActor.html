@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="es"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>DiscoveryMovies | Aplicación de gestion de fichas de peliculas - Listado Actores</title>
@@ -8,6 +8,7 @@
 </head>
 <body>
 <div>
+    <!--navbar-->
     <nav class="navbar navbar-expand-lg " style="background-color: darkgray;">
         <div class="container-fluid">
             <a class="navbar-brand" th:href="@{/cfilms/}">
@@ -17,13 +18,13 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a  class="nav-link active" aria-current="page" th:href="@{/cactores/listado/}" sec:authorize="hasAuthority('Admin')"> Actores</a>
+                        <a style="text-decoration: underline;" class="nav-link active" aria-current="page" th:href="@{/cactores/listado/}" sec:authorize="hasAuthority('Admin')"> Actores</a>
                     </li>
                     <li class="nav-item">
-                        <a  class="nav-link active" th:href="@{/criticas/all/}" sec:authorize="hasAuthority('Admin')"> Criticas</a>
+                        <a style="text-decoration: underline;" class="nav-link active" th:href="@{/criticas/all/}" sec:authorize="hasAuthority('Admin')"> Criticas</a>
                     </li>
                     <li class="nav-item">
-                        <a  class="nav-link active" th:href="@{/users/all/}" sec:authorize="hasAuthority('Admin')"> Usuarios</a>
+                        <a style="text-decoration: underline;" class="nav-link active" th:href="@{/users/all/}" sec:authorize="hasAuthority('Admin')"> Usuarios</a>
                     </li>
                     <form th:action="@{/cfilms/titulo}" method="get" class="d-flex" style="margin-left: 3cm;">
                         <input style="width: 70% ; height: 80%" type="text" class="form-control" id="titulo" name="titulo" placeholder="Busca tu pelicula ">

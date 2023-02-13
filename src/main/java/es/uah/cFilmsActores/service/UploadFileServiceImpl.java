@@ -24,6 +24,8 @@ public class UploadFileServiceImpl implements IUploadFileService {
 
     private final static String UPLOADS_FOLDER = "uploads";
 
+
+
     @Override
     public Resource load(String filename) throws MalformedURLException {
         Path pathFoto = getPath(filename);
