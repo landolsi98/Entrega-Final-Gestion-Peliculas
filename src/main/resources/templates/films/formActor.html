@@ -72,13 +72,12 @@
       <input type="text" class="form-control" th:field="*{paisDeNacimiento}" id="pais_de_nacimiento" name="pais_de_nacimiento"
              placeholder="Escriba la pais_de_nacimiento del actor" required="required">
     </div>
-
       <div class="mb-3">
           <p th:if="${actor.paisDeNacimiento != null}">The films list is not null and contains the following:</p>
 
           <p th:if="${actor.films == null}">The films list is null or empty.</p>
       </div>
-
+<!--
      <div class="mb-3">
          <label for="films" class="form-label">Films</label>
          <select   class="form-control" th:field="*{films}" id="films" name="films[]" required="required">
@@ -88,8 +87,7 @@
                      th:text="${film.titulo}"></option>
          </select>
      </div>
-
-
+-->
      <button type="submit" class="btn btn-dark">Guardar</button>
    <input type="hidden" th:field="*{idActor}"/>
  </form>

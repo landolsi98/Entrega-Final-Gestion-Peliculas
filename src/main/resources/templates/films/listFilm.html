@@ -69,7 +69,6 @@
                     <th scope="col">Idioma</th>
                     <th scope="col">Compania</th>
                     <th scope="col">Sinopsis</th>
-                    <th scope="col">photo</th>
                     <th scope="col">accion</th>
 
 
@@ -89,14 +88,16 @@
                     <td th:text="${film.idioma}"></td>
                     <td th:text="${film.compania}"></td>
                     <td th:text="${film.sinopsis}"></td>
-                    <td >
+                   <!-- <td >
                         <img  class="img-thumbnail rounded float-left"
                              style="max-width: 25%;" th:src="@{'/cfilms/uploads/' + ${film.imagen}}"
                              th:alt="${film.imagen}" />
                     </td>
 
-                    <td sec:authorize="hasRole('Admin')" >
-//has Authority
+                    -->
+                    <td><!-- sec:authorize="hasRole('Admin')" -->
+
+
                         <a th:href="@{/cfilms/editar/{id}  (id=${film.idFilm})  }" th:text="'editar'" class="btn btn-success btn-sm" role="button" title="Editar la pelicula."><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
                         <a th:href="@{/cfilms/borrar/{id}  (id=${film.idFilm})   }" th:text="'borrar'" onclick="return confirm('¿Estas seguro?')" class="btn btn-danger btn-sm" role="button" title="Eliminar la pelicula."><i class="fas fa-trash" aria-hidden="true"></i></a>
                     </td>

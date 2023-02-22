@@ -13,7 +13,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,8 +44,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
             final UserDetails principal = new org.springframework.security.core.userdetails.User(user, password, grantedAuths);
             final Authentication auth = new UsernamePasswordAuthenticationToken(principal, password, grantedAuths);
+            HttpSession session = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getSession();
+            session.setAttribute("user", userLoggedIn);
             return auth;
         }
+
+
+
         return null;
     }
 

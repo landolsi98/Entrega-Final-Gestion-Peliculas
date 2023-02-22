@@ -7,16 +7,20 @@ import es.uah.cFilmsActores.model.User;
 import es.uah.cFilmsActores.paginator.PageRender;
 import es.uah.cFilmsActores.service.ICriticasService;
 import es.uah.cFilmsActores.service.IFilmsService;
+import es.uah.cFilmsActores.service.IUsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -28,6 +32,9 @@ public class CriticasController {
 
     @Autowired
     IFilmsService filmsService;
+
+    @Autowired
+    IUsersService usersService;
 
     @GetMapping("/all")
     public String criticasList(Model model, @RequestParam(name="page", defaultValue = "0") int page) {
@@ -73,7 +80,12 @@ public class CriticasController {
    */
 
     @GetMapping("/film/{idfilm}")
-    public String findCriticasByIdFilm(Model model, @PathVariable("idfilm" ) int idFilm) {
+    public String findCriticasByIdFilm(Model model,Principal principal, @PathVariable("idfilm" ) int idFilm) {
+        if (principal != null) {
+            String email = principal.getName();
+            String Username = email.substring(0, email.indexOf("@"));
+            model.addAttribute("Username", principal.getName());
+        }
         List<Critica> all = criticasService.findCriticasByIdFilm(idFilm);
         Film film = filmsService.buscarFilmPorId(idFilm);
         float x = 0 ;
@@ -93,11 +105,13 @@ public class CriticasController {
     }
 
 
-
-
-
     @GetMapping ("/newCritica")
-       public String newCritica(Model model) {
+       public String newCritica(Model model,Principal principal) {
+        if (principal != null) {
+            String email = principal.getName();
+            String Username = email.substring(0, email.indexOf("@"));
+            model.addAttribute("Username", principal.getName());
+        }
         model.addAttribute("title", "nueva critica" );
         Critica critica = new Critica();
         model.addAttribute ("critica", critica);
@@ -105,18 +119,35 @@ public class CriticasController {
 
 }
     @PostMapping("/save")
-    public String saveCritica(Model model, Critica critica, RedirectAttributes attributes, HttpSession session) {
-        User user = (User) session.getAttribute("user");
-        critica.setIdUser(user.getIdUser());
-        criticasService.saveCritica(critica);
-        model.addAttribute("title", "Nueva critica");
-        attributes.addFlashAttribute("msg", "Los datos de la critica fueron guardados!");
-        return "redirect:FilmDetails";
+    public String saveCritica(Model model, Critica critica, RedirectAttributes attributes, HttpSession session, Principal principal) {
+        if (principal != null) {
+          /*  UserDetails userDetails = (UserDetails) ((Authentication) principal).getPrincipal();
+            model.addAttribute("Username", userDetails.getUsername());*/
+            User user = usersService.findUserByEmail(principal.getName());
+            critica.setIdUser(user.getIdUser());
+            critica.setUser(user);
+            criticasService.saveCritica(critica);
+
+            model.addAttribute("title", "Nueva critica");
+            attributes.addFlashAttribute("msg", "Los datos de la critica fueron guardados!");
+            return "redirect:/cfilms/";
+
+            // User user = (User) session.getAttribute("user");
+
+        } else {
+            // Handle the case where the user is not logged in
+            return "redirect:/login";
+        }
+
     }
 
-
     @GetMapping("/edit/{id}")
-    public String editCritica(Model model, @PathVariable("id") Integer id) {
+    public String editCritica(Model model,Principal principal, @PathVariable("id") Integer id) {
+        if (principal != null) {
+            String email = principal.getName();
+            String Username = email.substring(0, email.indexOf("@"));
+            model.addAttribute("Username", principal.getName());
+        }
         Critica critica = criticasService.findCriticaById(id);
         model.addAttribute("title", "Editar critica");
         model.addAttribute("critica", critica);

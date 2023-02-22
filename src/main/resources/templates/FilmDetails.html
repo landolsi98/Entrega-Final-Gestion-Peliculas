@@ -87,7 +87,7 @@
         <div class="card mb-3" style="max-width: 840px ; margin-left: 200px" >
           <div class="row g-0">
             <div class="col-md-4">
-              <img class="imageD" th:src="@{/uploads/badboys.jpg}" width="200" height="260" alt="film2" style="display: inline-block;"
+              <img class="imageD"  th:src="@{'/cfilms/uploads/' + ${film.imagen}}" th:alt="${film.imagen}" width="200" height="260" alt="film2" style="display: inline-block;"
               />
             </div>
             <div class="col-md-8">
@@ -139,22 +139,27 @@
 
                 <div class="critique-area">
                   <h3>Deja tu critica</h3>
-                  <form th:action="@{/criticas/save}" method="post">
-                    <div class="form-group">
-                      <label for="username">Nombre de usuario</label>
-                      <input  type="text" class="form-control" id="username" name="username" placeholder="Ingresa tu nombre de usuario" required>
-                    </div>
-                    <select>
+                  <form th:action="@{/criticas/save}" method="post" th:object="${critica}">
+                    <select name="nota">
+
                       <option th:each="i : ${#numbers.sequence(0,9)}"
+
                               th:value="${i}"
-                              th:text="${i}">
+                              th:text="${i}"
+
+                        th:field="*{nota}">
+
                       </option>
                     </select>
                     <div class="form-group">
                       <label for="valoracion">Critica</label>
                       <textarea class="form-control" id="valoracion" name="valoracion" placeholder="Escribe tu critica aquí" rows="3" required></textarea>
+                      <div th:field="*{valoracion}" ></div>
                     </div>
-                    <input type="hidden" th:value="${film.idFilm}" name="idFilm">
+                    <input type="hidden" th:attr="name='idFilm'" th:value="${film.idFilm}" name="idFilm">
+
+
+
                     <input type="hidden" id="fecha" name="fecha" value="">
                     <button type="submit" class="btn btn-primary" onclick="document.getElementById('fecha').value = new Date().toISOString().substr(0, 10)">Enviar</button>
                   </form>

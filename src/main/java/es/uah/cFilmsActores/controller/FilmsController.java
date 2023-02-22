@@ -1,6 +1,7 @@
 package es.uah.cFilmsActores.controller;
 
 import es.uah.cFilmsActores.model.Actor;
+import es.uah.cFilmsActores.model.Critica;
 import es.uah.cFilmsActores.model.Film;
 import es.uah.cFilmsActores.model.User;
 import es.uah.cFilmsActores.paginator.PageRender;
@@ -21,6 +22,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -57,7 +60,6 @@ public class FilmsController {
     @GetMapping("/uploads/{filename:.+}")
     public ResponseEntity<Resource> verFoto(@PathVariable String filename) {
 
-
         Resource recurso = null;
 
         try {
@@ -93,7 +95,7 @@ public class FilmsController {
 
     @GetMapping(value = {"/", "/home", ""})
     public String listadoFilms(Model model , Principal principal, @RequestParam(name = "page", defaultValue = "0") int page) {
-        if (principal != null){
+            if (principal != null){
             String email = principal.getName();
             String Username = email.substring(0, email.indexOf("@"));
             model.addAttribute("Username", Username);
@@ -109,7 +111,12 @@ public class FilmsController {
 
     }
     @GetMapping("/all")
-    public String AllFilms(Model model, @RequestParam(name = "page", defaultValue = "0") int page) {
+    public String AllFilms(Model model,Principal principal, @RequestParam(name = "page", defaultValue = "0") int page) {
+        if (principal != null){
+            String email = principal.getName();
+            String Username = email.substring(0, email.indexOf("@"));
+            model.addAttribute("Username", Username);
+        }
         Pageable pageable = PageRequest.of(page, 30);
         Page<Film> all = filmsService.buscarTodos(pageable);
         PageRender<Film> pageRender = new PageRender<Film>("/cfilms/all", all);
@@ -121,15 +128,27 @@ public class FilmsController {
     }
 
     @GetMapping("/idfilm/{id}")
-    public String buscarFilmPorId(Model model, @PathVariable("id") Integer id) {
+    public String buscarFilmPorId(Model model,Principal principal, @PathVariable("id") Integer id) {
+        if (principal != null) {
+            String email = principal.getName();
+            String Username = email.substring(0, email.indexOf("@"));
+            model.addAttribute("Username", principal.getName());
+        }
         Film film = filmsService.buscarFilmPorId(id);
         model.addAttribute("film", film);
+        Critica critica1 = new Critica();
+        model.addAttribute ("critica", critica1);
         return "FilmDetails";
 
     }
 
     @GetMapping("/idfilm/actor/{id}")
-    public String buscarActoPorId(Model model, @PathVariable("id") Integer id) {
+    public String buscarActoPorId(Model model,Principal principal, @PathVariable("id") Integer id) {
+        if (principal != null) {
+            String email = principal.getName();
+            String Username = email.substring(0, email.indexOf("@"));
+            model.addAttribute("Username", principal.getName());
+        }
         Film film = filmsService.buscarFilmPorId(id);
         model.addAttribute("film", film);
         return "films/ActoresDetails";
@@ -236,13 +255,13 @@ public class FilmsController {
 
                 uniqueFilename = uploadFileService.copy(foto);
                 log.info("test3");
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
             log.info("test4");
             attributes.addFlashAttribute("msg", "Has subido correctamente '" + uniqueFilename + "'");
 
+            verFoto(uniqueFilename);
             film.setImagen(uniqueFilename);
             filmsService.guardarFilm(film);
 

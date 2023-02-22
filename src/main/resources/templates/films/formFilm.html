@@ -106,17 +106,17 @@
         </div>
 
         <div class="mb-3">
-            <select class="form-select"  Genero th:field="*{genero}" name="genero" id="genero">
-                                      Genero
-                <!--                 <option th:value="" selected>Seleccionar genero</option> -->
-                <option th:value="Drama">Drama</option>
-                <option th:value="Thriller">Thriller</option>
-                <option th:value="Crimen">Crimen</option>
-                <option th:value="Accion">Acción</option>
-                <option th:value="ficción">Ciencia ficción</option>
-                <option th:value="Comedia">Comedia</option>
-                <option th:value="Documental">Documental</option>
+            <select class="form-select" name="genero" id="genero" th:field="*{genero}" multiple size="6">
+                <option value="Drama">Drama</option>
+                <option value="Thriller">Thriller</option>
+                <option value="Crimen">Crimen</option>
+                <option value="Accion">Acción</option>
+                <option value="Ciencia ficción">Ciencia ficción</option>
+                <option value="Comedia">Comedia</option>
+                <option value="Documental">Documental</option>
+                <option value="Romance">Romance</option>
             </select>
+
         </div>
 
         <img th:if="${film.imagen != null && #strings.length(film.imagen) > 0}" class="img-thumbnail rounded float-left"

@@ -73,19 +73,11 @@
                     <td th:text="${critica.valoracion}"></td>
                     <td th:text="${critica.nota}"></td>
                     <td th:text="${critica.fecha}"></td>
-
                     <td>
-                        <table>
-
-                        </table>
-                    </td>
-
-                    <td>
-                        <a th:href="@{/criticas/edit/{id}  (id=${critica.idCritica})  }" th:text="'editar'"
+                      <!--  <a th:href="@{/criticas/edit/{id}  (id=${critica.idCritica})  }" th:text="'editar'"
                            class="btn btn-secondary btn-sm" role="button" title="Editar usuario."><i
                                 class="fas fa-pencil-alt" aria-hidden="true"></i></a>
-
-
+                        -->
                         <a th:href="@{/criticas/delete/{id}  (id=${critica.idCritica})   }" th:text="'borrar'"
                            onclick="return confirm('¿Estas seguro?')" class="btn btn-danger btn-sm" role="button"
                            title="Eliminar critica."><i class="fas fa-trash" aria-hidden="true"></i></a>
@@ -93,7 +85,15 @@
                 </tr>
 
                 </tbody>
-            </table>
+            </table>m
+                 <!--   <td>
+                        <table>
+
+                        </table>
+                    </td>
+-->
+
+
 
             <nav th:replace="paginator-nav :: paginator"></nav>
 
