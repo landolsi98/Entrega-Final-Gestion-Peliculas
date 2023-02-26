@@ -5,6 +5,9 @@
     <title>DiscoveryMovies | Aplicación de gestion de fichas de peliculas</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
     <link th:href="@{/css/style.css}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2/dist/umd/popper.min.js"></script>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css">
 
 </head>
 <body>
@@ -19,13 +22,16 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a  class="nav-link active" aria-current="page" th:href="@{/cactores/listado/}" sec:authorize="hasAuthority('Admin')"> Actores</a>
+                        <a style="text-decoration: underline;" class="nav-link active" aria-current="page" th:href="@{/cfilms/all/}" sec:authorize="hasAuthority('Admin')"> Peliculas</a>
                     </li>
                     <li class="nav-item">
-                        <a  class="nav-link active" th:href="@{/criticas/all/}" sec:authorize="hasAuthority('Admin')"> Criticas</a>
+                        <a style="text-decoration: underline;" class="nav-link active" aria-current="page" th:href="@{/cactores/listado/}" sec:authorize="hasAuthority('Admin')"> Actores</a>
                     </li>
                     <li class="nav-item">
-                        <a  class="nav-link active" th:href="@{/users/all/}" sec:authorize="hasAuthority('Admin')"> Usuarios</a>
+                        <a style="text-decoration: underline;" class="nav-link active" th:href="@{/criticas/all/}" sec:authorize="hasAuthority('Admin')"> Criticas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a style="text-decoration: underline;" class="nav-link active" th:href="@{/users/all/}" sec:authorize="hasAuthority('Admin')"> Usuarios</a>
                     </li>
                     <form th:action="@{/cfilms/titulo}" method="get" class="d-flex" style="margin-left: 3cm;">
                         <input style="width: 70% ; height: 80%" type="text" class="form-control" id="titulo" name="titulo" placeholder="Busca tu pelicula ">
@@ -34,17 +40,24 @@
                     </form>
 
                 </ul>
-                <div class="btn-group dropstart">
-                    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #052959; color: papayawhip; border-radius: 50%; width: 55px; padding-top: 15px; height: 55px; text-align: center; display: flex; align-items: center; justify-content: center;">
-                        <p style="font-size: 14px" th:text="${Username}"> </p>
-                    </button>
-                    <ul style="background-color: papayawhip" class="dropdown-menu">
-                        <li><a class="dropdown-item"th:href="@{/cfilms/}"> Home</a></li>
-                        <li><a class="dropdown-item" th:href="@{/logout/}">Logout</a></li>
-                        <li><a class="dropdown-item" href="#">Mas..</a></li>
-                    </ul>
+                <div th:if="${Username != null}">
+                    <div class="btn-group dropstart">
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #052959; color: papayawhip; border-radius: 50%; width: 55px; padding-top: 15px; height: 55px; text-align: center; display: flex; align-items: center; justify-content: center;">
+                            <p style="font-size: 14px" th:text="${Username}"> </p>
+                        </button>
+                        <ul style="background-color: papayawhip" class="dropdown-menu">
+                            <li><a class="dropdown-item"th:href="@{/cfilms/}"> Home</a></li>
+                            <li><a class="dropdown-item" th:href="@{/logout/}">Logout</a></li>
+                            <li><a class="dropdown-item" href="#">Mas..</a></li>
+                        </ul>
+                    </div>
                 </div>
+                <div th:if="${Username == null}">
+                    <a  class="btn btn-primary" style="background-color:papayawhip; color: #091B29" role="button" th:href="@{/login/}"> Iniciar sesión </a>  | <a  class="btn btn-primary" style="background-color:papayawhip ; color: #091B29" role="button" th:href="@{/users/registrarme/}">Registrarse </a>
+                </div>
+
             </div>
+
         </div>
     </nav>
 </div>
@@ -68,15 +81,13 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/cfilms/idfilm/actor/{id}(id=${film.idFilm})}" >Actores</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
-                    </li>
+
                 </ul>
                 </a>
                 <div class="card mb-3" style="max-width: 840px ; margin-left: 200px" >
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img class="imageD" th:src="@{/uploads/badboys.jpg}" width="200" height="260" alt="film2" style="display: inline-block;"
+                            <img class="imageD"  th:src="@{'/cfilms/uploads/' + ${film.imagen}}" th:alt="${film.imagen}" width="200" height="260" alt="film2" style="display: inline-block;"
                             />
                         </div>
 
@@ -87,13 +98,17 @@
                                     <p class="mr-5" > Critica : </p>
                                     <p th:text="${critica.valoracion}"></p>
                                 </div>
-                                <div style="font-size: 10px" class="d-flex">
+                                <div  class="d-flex">
                                     <p class="mr-5" > Fecha : </p>
                                     <p th:text="${critica.fecha}"></p>
                                 </div>
                                 <div class="d-flex">
                                     <p class="mr-5" > Nota : </p>
                                     <p th:text="${critica.nota}"></p>
+                                </div>
+                                <div style="font-size: 14px" class="d-flex">
+                                    <p class="mr-5" > Usuario : </p>
+                                    <p th:text="${critica.user.username}"></p>
                                 </div>
                                 <div style="position: absolute; top: 0; right: 0; width: 60px; height: 63px; background-color: blue; display: flex; align-items: center; justify-content: center;"><p style="font-size: 25px ; margin-top:7px; color: whitesmoke "  th:text="${notaMedia}"></p></div>
                             </div>

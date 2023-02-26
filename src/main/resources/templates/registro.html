@@ -12,6 +12,7 @@
   <h2 th:text="${title}"
       class="text-secondary border border-success border-top-0 border-left-0 border-right-0"></h2>
   <form th:action="@{/users/registrar}" method="post" th:object="${user}">
+    <div th:if="${msga != null}" class='alert alert-success' th:text="${msga}" role='alert'></div>
     <div th:if="${#fields.hasErrors('*')}" class='alert alert-danger' role='alert'>
       Por favor corrija los siguientes errores:
       <ul>
@@ -21,17 +22,17 @@
     <div class="mb-3">
       <label for="nombre" class="form-label">Nombre</label>
       <input type="text" class="form-control" th:field="*{username}" id="nombre" name="nombre"
-             placeholder="Escriba el nombre del usuario" required="required">
+             placeholder="Escriba el nombre de usuario" required="required">
     </div>
     <div class="mb-3">
       <label for="clave" class="form-label">Clave</label>
-      <input type="text" class="form-control" th:field="*{password}" id="clave" name="clave"
-             placeholder="Escriba la clave del usuario" required="required">
+      <input type="password" class="form-control" th:field="*{password}" id="clave" name="clave"
+             placeholder="Escriba su clave " required="required">
     </div>
     <div class="mb-3">
       <label for="correo" class="form-label">Correo</label>
       <input type="text" class="form-control" th:field="*{email}" id="correo" name="correo"
-             placeholder="Escriba el correo del usuario" required="required">
+             placeholder="Escriba su correo " required="required">
     </div>
     <button type="submit" class="btn btn-dark">Registrarse</button>
   </form>

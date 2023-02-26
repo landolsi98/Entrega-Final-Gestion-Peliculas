@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <title>DiscoveryMovies | Aplicación de gestion de fichas de peliculas</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2/dist/umd/popper.min.js"></script>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css">
 
 </head>
 <body>
@@ -17,6 +20,9 @@
             </a>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a style="text-decoration: underline;" class="nav-link active" aria-current="page" th:href="@{/cfilms/all/}" sec:authorize="hasAuthority('Admin')"> Peliculas</a>
+                    </li>
                     <li class="nav-item">
                         <a style="text-decoration: underline;" class="nav-link active" aria-current="page" th:href="@{/cactores/listado/}" sec:authorize="hasAuthority('Admin')"> Actores</a>
                     </li>
@@ -33,18 +39,26 @@
                     </form>
 
                 </ul>
-                <div class="btn-group dropstart">
-                    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #052959; color: papayawhip; border-radius: 50%; width: 55px; padding-top: 15px; height: 55px; text-align: center; display: flex; align-items: center; justify-content: center;">
-                        <p style="font-size: 14px" th:text="${Username}"> </p>
-                    </button>
-                    <ul style="background-color: papayawhip" class="dropdown-menu">
-                        <li><a class="dropdown-item"th:href="@{/cfilms/}"> Home</a></li>
-                        <li><a class="dropdown-item" th:href="@{/logout/}">Logout</a></li>
-                        <li><a class="dropdown-item" href="#">Mas..</a></li>
-                    </ul>
+                <div th:if="${Username != null}">
+                    <div class="btn-group dropstart">
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: #052959; color: papayawhip; border-radius: 50%; width: 55px; padding-top: 15px; height: 55px; text-align: center; display: flex; align-items: center; justify-content: center;">
+                            <p style="font-size: 14px" th:text="${Username}"> </p>
+                        </button>
+                        <ul style="background-color: papayawhip" class="dropdown-menu">
+                            <li><a class="dropdown-item"th:href="@{/cfilms/}"> Home</a></li>
+                            <li><a class="dropdown-item" th:href="@{/logout/}">Logout</a></li>
+                            <li><a class="dropdown-item" href="#">Mas..</a></li>
+                        </ul>
+                    </div>
                 </div>
+                <div th:if="${Username == null}">
+                    <a  class="btn btn-primary" style="background-color:papayawhip; color: #091B29" role="button" th:href="@{/login/}"> Iniciar sesión </a>  | <a  class="btn btn-primary" style="background-color:papayawhip ; color: #091B29" role="button" th:href="@{/users/registrarme/}">Registrarse </a>
+
+                </div>
+
             </div>
-        </div>
+            </div>
+
     </nav>
 </div>
 <div class="container">
@@ -106,7 +120,7 @@
         </div>
 
         <div class="mb-3">
-            <select class="form-select" name="genero" id="genero" th:field="*{genero}" multiple size="6">
+            <select  class="form-select" name="genero" id="genero" th:field="*{genero}" multiple size="6" required="required">
                 <option value="Drama">Drama</option>
                 <option value="Thriller">Thriller</option>
                 <option value="Crimen">Crimen</option>
@@ -121,7 +135,7 @@
 
         <img th:if="${film.imagen != null && #strings.length(film.imagen) > 0}" class="img-thumbnail rounded float-left"
              style="max-width: 25%;" th:src="@{'/cfilms/uploads/' + ${film.imagen}}"
-             th:alt="${film.imagen}" />
+             th:alt="${film.imagen}"  />
 
         <div class="mb-3">
             <label for="file" class="col-sm-2 col-form-label">Imagen</label>

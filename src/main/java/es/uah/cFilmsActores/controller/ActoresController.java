@@ -14,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
+
 
 @Controller
 @RequestMapping("/cactores")
@@ -25,7 +27,12 @@ public class ActoresController {
     IFilmsService filmsService;
 
     @GetMapping("/listado")
-    public String listadoActores(Model model, @RequestParam(name="page", defaultValue = "0") int page) {
+    public String listadoActores(Model model, Principal principal, @RequestParam(name="page", defaultValue = "0") int page) {
+        if (principal != null) {
+            String email = principal.getName();
+            String Username = email.substring(0, email.indexOf("@"));
+            model.addAttribute("Username", Username);
+        }
         Pageable pageable = PageRequest.of(page,6);
         Page<Actor> listado = actoresService.buscarTodos(pageable);
         PageRender<Actor> pageRender = new PageRender<Actor>("/cactores/listado", listado);
@@ -35,7 +42,12 @@ public class ActoresController {
         return "films/listActor";
     }
     @GetMapping("/nuevo")
-    public String nuevo(Model model, @RequestParam(name = "page", defaultValue = "0") int page) {
+    public String nuevo(Model model,Principal principal, @RequestParam(name = "page", defaultValue = "0") int page) {
+        if (principal != null) {
+            String email = principal.getName();
+            String Username = email.substring(0, email.indexOf("@"));
+            model.addAttribute("Username", Username);
+        }
         model.addAttribute("titulo", "Nuevo actor");
         Pageable pageable = PageRequest.of(page, 30);
         Page<Film> listado = filmsService.buscarTodos(pageable);
@@ -53,7 +65,12 @@ public class ActoresController {
         return "redirect:/cactores/listado";
     }
     @GetMapping("/editar/{id}")
-    public String editarActor(Model model, @PathVariable("id") Integer id) {
+    public String editarActor(Model model,Principal principal, @PathVariable("id") Integer id) {
+        if (principal != null) {
+            String email = principal.getName();
+            String Username = email.substring(0, email.indexOf("@"));
+            model.addAttribute("Username", Username);
+        }
         Actor actor = actoresService.buscarActorPorId(id);
         model.addAttribute("titulo", "Editar actor");
         model.addAttribute("actor", actor);

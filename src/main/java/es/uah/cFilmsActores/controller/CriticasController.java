@@ -37,7 +37,12 @@ public class CriticasController {
     IUsersService usersService;
 
     @GetMapping("/all")
-    public String criticasList(Model model, @RequestParam(name="page", defaultValue = "0") int page) {
+    public String criticasList(Model model,Principal principal, @RequestParam(name="page", defaultValue = "0") int page) {
+        if (principal != null) {
+            String email = principal.getName();
+            String Username = email.substring(0, email.indexOf("@"));
+            model.addAttribute("Username", Username);
+        }
         Pageable pageable = PageRequest.of(page,6);
         Page<Critica> all = criticasService.findAll(pageable);
         PageRender<Critica> pageRender = new PageRender<Critica>("/criticas/all", all);
@@ -54,7 +59,12 @@ public class CriticasController {
     }
 
     @GetMapping ("/idcritica/{id}")
-    public String findCriticaById (Model model, @PathVariable("id") Integer id) {
+    public String findCriticaById (Model model,Principal principal, @PathVariable("id") Integer id) {
+        if (principal != null) {
+            String email = principal.getName();
+            String Username = email.substring(0, email.indexOf("@"));
+            model.addAttribute("Username", Username);
+        }
         Critica critica = criticasService.findCriticaById(id);
         model.addAttribute("critica", critica);
         return "formCritica";
@@ -84,7 +94,7 @@ public class CriticasController {
         if (principal != null) {
             String email = principal.getName();
             String Username = email.substring(0, email.indexOf("@"));
-            model.addAttribute("Username", principal.getName());
+            model.addAttribute("Username", Username);
         }
         List<Critica> all = criticasService.findCriticasByIdFilm(idFilm);
         Film film = filmsService.buscarFilmPorId(idFilm);
@@ -110,7 +120,7 @@ public class CriticasController {
         if (principal != null) {
             String email = principal.getName();
             String Username = email.substring(0, email.indexOf("@"));
-            model.addAttribute("Username", principal.getName());
+            model.addAttribute("Username", Username);
         }
         model.addAttribute("title", "nueva critica" );
         Critica critica = new Critica();
@@ -129,13 +139,9 @@ public class CriticasController {
             criticasService.saveCritica(critica);
 
             model.addAttribute("title", "Nueva critica");
-            attributes.addFlashAttribute("msg", "Los datos de la critica fueron guardados!");
-            return "redirect:/cfilms/";
-
-            // User user = (User) session.getAttribute("user");
-
+            attributes.addFlashAttribute("gCritica", "Los datos de la critica fueron guardados!");
+            return "redirect:/cfilms";
         } else {
-            // Handle the case where the user is not logged in
             return "redirect:/login";
         }
 
@@ -146,7 +152,7 @@ public class CriticasController {
         if (principal != null) {
             String email = principal.getName();
             String Username = email.substring(0, email.indexOf("@"));
-            model.addAttribute("Username", principal.getName());
+            model.addAttribute("Username", Username);
         }
         Critica critica = criticasService.findCriticaById(id);
         model.addAttribute("title", "Editar critica");

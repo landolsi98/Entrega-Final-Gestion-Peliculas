@@ -1,6 +1,7 @@
 package es.uah.cFilmsActores.controller;
 
 
+import es.uah.cFilmsActores.model.Film;
 import es.uah.cFilmsActores.model.Rol;
 import es.uah.cFilmsActores.model.User;
 import es.uah.cFilmsActores.paginator.PageRender;
@@ -16,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
@@ -33,7 +35,12 @@ public class UsersController {
 
 
 @GetMapping (value = "/all")
-public String usersList (Model model, @RequestParam(name = "page", defaultValue = "0") int page)   {
+public String usersList (Model model, Principal principal, @RequestParam(name = "page", defaultValue = "0") int page)   {
+    if (principal != null) {
+        String email = principal.getName();
+        String Username = email.substring(0, email.indexOf("@"));
+        model.addAttribute("Username", Username);
+    }
     Pageable pageable = PageRequest.of(page, 6);
     Page<User> all = usersService.findAll(pageable);
     PageRender<User> pageRender = new PageRender<User>("/users/all", all);
@@ -44,14 +51,25 @@ public String usersList (Model model, @RequestParam(name = "page", defaultValue 
 }
 
 @GetMapping("/newUser")
-    public String newUser (Model model) {
+    public String newUser (Model model, User user,Principal princial ) {
+    if (princial != null) {
+        String email = princial.getName();
+        String Username = email.substring(0, email.indexOf("@"));
+        model.addAttribute("Username", Username);
+    }
     List<Rol> roles = rolesService.findAll();
+    if (usersService.findUserByEmail(user.getEmail())!=null) {
+        model.addAttribute("msga", "Error al guardar, ya existe el usuartio!");
+        return "redirect:/login";
+    } else {
+
+
     model.addAttribute("title", "nuevo usuario");
     model.addAttribute("allRoles", roles);
-    User user = new User();
-    model.addAttribute("user", user);
+    User usuario = new User();
+    model.addAttribute("user", usuario);
     return "users/formUsers";
-}
+} }
 
 
     @GetMapping ("/search")
@@ -66,14 +84,21 @@ public String usersList (Model model, @RequestParam(name = "page", defaultValue 
     return "users/formUsers";
             }
 
-    @GetMapping ("/username")
-    public String findUserByUsername (Model model, @RequestParam("username") String username) {
-    User user = usersService.findUserByUsername(username);
-    model.addAttribute("username", "listado de usuarios por username");
-    model.addAttribute("user", user);
-    return "users/usersList";
-
-            }
+    @GetMapping("/username")
+    public String findUserByUsername(Model model, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam("username") String username) {
+        Pageable pageable = PageRequest.of(page, 6);
+        Page<User> listado;
+        if (username.equals("")) {
+            listado = usersService.findAll(pageable);
+        } else {
+            listado = usersService.findUserByUsername(username, pageable);
+        }
+        PageRender<User> pageRender = new PageRender<User>("/all", listado);
+        model.addAttribute("titulo", "Listado de usuarios por username ");
+        model.addAttribute("listadoUsuarios", listado);
+        model.addAttribute("page", pageRender);
+        return "home";
+    }
 
     @GetMapping ("/email")
     public String findUserByEmail (Model model, @RequestParam("email") String email) {
@@ -88,6 +113,10 @@ public String usersList (Model model, @RequestParam(name = "page", defaultValue 
     public String saveUser(Model model, User user,   RedirectAttributes attributes)  {
     List<Rol> roles = rolesService.findAll();
     model.addAttribute("allRoles" , roles);
+        if (usersService.findUserByEmail(user.getEmail())!=null) {
+            attributes.addFlashAttribute("msga", "Error al guardar, ya existe el correo!");
+            return "redirect:/users/formUsers";
+        }
     usersService.saveUser(user);
     model.addAttribute("title", "nuevo usuario");
     attributes.addFlashAttribute("msg", "los datos del usuario fueron guardados !");
@@ -103,7 +132,6 @@ public String usersList (Model model, @RequestParam(name = "page", defaultValue 
     }
     @PostMapping("/registrar")
     public String registro(Model model, User user, RedirectAttributes attributes) {
-        //si existe un usuario con el mismo correo no lo guardamos
         if (usersService.findUserByEmail(user.getEmail())!=null) {
             attributes.addFlashAttribute("msga", "Error al guardar, ya existe el correo!");
             return "redirect:/login";
@@ -112,14 +140,19 @@ public String usersList (Model model, @RequestParam(name = "page", defaultValue 
         Rol rol = rolesService.findRolById(1);
         user.setRol(rol);
         usersService.saveUser(user);
-        attributes.addFlashAttribute("msg", "Los datos del registro fueron guardados!");
+        attributes.addFlashAttribute("msgRegistro", "Los datos del registro fueron guardados!");
         return "redirect:/login";
     }
 
 
 
     @GetMapping("edit/{id}")
-    public String editUser(Model model, @PathVariable("id") Integer id) {
+    public String editUser(Model model, Principal principal, @PathVariable("id") Integer id) {
+        if (principal != null) {
+            String email = principal.getName();
+            String Username = email.substring(0, email.indexOf("@"));
+            model.addAttribute("Username", Username);
+        }
     User user = usersService.findUserById(id);
     model.addAttribute("title", "Editar Usuario");
     model.addAttribute("user", user);
@@ -135,9 +168,7 @@ public String usersList (Model model, @RequestParam(name = "page", defaultValue 
     if ( user != null) {*/
     usersService.deleteUser(id);
     attributes.addFlashAttribute("msg", "los datos del usuario fueron borrados!");
-   /* } else {
-        attributes.addFlashAttribute("msg", "Usuario no encontrado!");
-    }*/
+
     return "redirect:/users/all";
     }
 

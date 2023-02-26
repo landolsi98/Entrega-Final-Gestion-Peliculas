@@ -19,7 +19,7 @@ public class CriticasServiceImpl implements ICriticasService {
     @Autowired
     RestTemplate template;
 
-    String url = "http://localhost:8002/criticas";
+    String url = "http://localhost:8090/api/criticas/criticas";
 
     @Override
     public Page<Critica> findAll(Pageable pageable) {

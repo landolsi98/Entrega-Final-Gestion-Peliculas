@@ -75,6 +75,9 @@ body {
     align-items: center;
     justify-content: center;
 }
+.truncated-text.hidden {
+    display: none;
+}
 
 .username-text {
     font-size: 18px;

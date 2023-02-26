@@ -81,7 +81,12 @@ public class FilmsController {
 
 
     @GetMapping("/nuevo")
-    public String nuevo(Model model) {
+    public String nuevo(Model model,Principal principal) {
+        if (principal != null) {
+            String email = principal.getName();
+            String Username = email.substring(0, email.indexOf("@"));
+            model.addAttribute("Username", Username);
+        }
         model.addAttribute("titulo", "Nuevo film");
         Film film = new Film();
         model.addAttribute("film", film);
@@ -132,7 +137,7 @@ public class FilmsController {
         if (principal != null) {
             String email = principal.getName();
             String Username = email.substring(0, email.indexOf("@"));
-            model.addAttribute("Username", principal.getName());
+            model.addAttribute("Username", Username);
         }
         Film film = filmsService.buscarFilmPorId(id);
         model.addAttribute("film", film);
@@ -147,7 +152,7 @@ public class FilmsController {
         if (principal != null) {
             String email = principal.getName();
             String Username = email.substring(0, email.indexOf("@"));
-            model.addAttribute("Username", principal.getName());
+            model.addAttribute("Username", Username);
         }
         Film film = filmsService.buscarFilmPorId(id);
         model.addAttribute("film", film);
@@ -156,7 +161,14 @@ public class FilmsController {
     }
 
     @GetMapping("/idfilm/actorDetail/{id}")
-    public String buscarActorPorId(Model model, @PathVariable("id") Integer id) {
+    public String buscarActorPorId(Model model,Principal principal, @PathVariable("id") Integer id) {
+        if (principal != null) {
+            String email = principal.getName();
+            String Username = email.substring(0, email.indexOf("@"));
+            model.addAttribute("Username", Username);
+        }
+        Film film = filmsService.buscarFilmPorId(id);
+        model.addAttribute("film", film);
         Actor actor = actoresService.buscarActorPorId(id);
         model.addAttribute("actor", actor);
         return "films/ActorDetails";
@@ -164,7 +176,12 @@ public class FilmsController {
     }
 
         @GetMapping("/titulo")
-    public String buscarFilmsPorTitulo(Model model, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam("titulo") String titulo) {
+    public String buscarFilmsPorTitulo(Model model,Principal principal, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam("titulo") String titulo) {
+            if (principal != null) {
+                String email = principal.getName();
+                String Username = email.substring(0, email.indexOf("@"));
+                model.addAttribute("Username", Username);
+            }
         Pageable pageable = PageRequest.of(page, 5);
         Page<Film> listado;
         if (titulo.equals("")) {
@@ -180,7 +197,12 @@ public class FilmsController {
     }
 
     @GetMapping("/genero")
-    public String buscarFilmsPorGenero(Model model, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam("genero") String genero) {
+    public String buscarFilmsPorGenero(Model model,Principal principal, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam("genero") String genero) {
+        if (principal != null) {
+            String email = principal.getName();
+            String Username = email.substring(0, email.indexOf("@"));
+            model.addAttribute("Username", Username);
+        }
         Pageable pageable = PageRequest.of(page, 5);
         Page<Film> listado = filmsService.buscarFilmsPorGenero(genero, pageable);
         PageRender<Film> pageRender = new PageRender<Film>("/listado", listado);
@@ -191,7 +213,12 @@ public class FilmsController {
     }
 
     @GetMapping("/idioma")
-    public String buscarFilmsPorIdioma(Model model, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam("idioma") String idioma) {
+    public String buscarFilmsPorIdioma(Model model,Principal principal, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam("idioma") String idioma) {
+        if (principal != null) {
+            String email = principal.getName();
+            String Username = email.substring(0, email.indexOf("@"));
+            model.addAttribute("Username", Username);
+        }
         Pageable pageable = PageRequest.of(page, 5);
         Page<Film> listado;
         if (idioma.equals("")) {
@@ -206,7 +233,12 @@ public class FilmsController {
         return "home";
     }
     @GetMapping("/reparto")
-    public String buscarFilmsPorReparto(Model model, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam("reparto") String reparto) {
+    public String buscarFilmsPorReparto(Model model,Principal principal, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam("reparto") String reparto) {
+        if (principal != null) {
+            String email = principal.getName();
+            String Username = email.substring(0, email.indexOf("@"));
+            model.addAttribute("Username", Username);
+        }
         Pageable pageable = PageRequest.of(page, 5);
         Page<Film> listado;
         if (reparto.equals("")) {
@@ -220,20 +252,7 @@ public class FilmsController {
         model.addAttribute("page", pageRender);
         return "home";
     }
-/*
-    @GetMapping("/listadoActores/{id}")
-    public String buscarActorPorFilm(Model model, @RequestParam(name="page", defaultValue="0") int page, @PathVariable("id") Integer id) {
-        Pageable pageable = PageRequest.of(page, 5);
-        Film film = filmsService.buscarFilmPorId(id);
-        List<Actor> listadoA = film.getActores();
-        Page<Actor> listado = new PageImpl<>(listadoA);
-        PageRender<Actor> pageRender = new PageRender<Actor>("/listado", listado);
-        model.addAttribute("titulo", "Listado de actores por film");
-        model.addAttribute("listadoActores", listado);
-        model.addAttribute("page", pageRender);
-        return "films/ActoresDetails";
-    }
-*/
+
 
 
     @PostMapping("/guardar/")
@@ -273,7 +292,12 @@ public class FilmsController {
     }
 
     @GetMapping("/editar/{id}")
-    public String editarFilm(Model model, @PathVariable("id") Integer id) {
+    public String editarFilm(Model model,Principal principal, @PathVariable("id") Integer id) {
+        if (principal != null) {
+            String email = principal.getName();
+            String Username = email.substring(0, email.indexOf("@"));
+            model.addAttribute("Username", Username);
+        }
         Film film = filmsService.buscarFilmPorId(id);
         model.addAttribute("titulo", "Editar film");
         model.addAttribute("film", film);

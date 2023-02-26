@@ -20,7 +20,7 @@ public class UsersServiceImpl  implements IUsersService {
     @Autowired
     RestTemplate template;
 
-    String url = "http://localhost:8002/users";
+    String url = "http://localhost:8090/api/criticas/users";
 
 
     @Override
@@ -50,9 +50,11 @@ public class UsersServiceImpl  implements IUsersService {
     }
 
     @Override
-    public User findUserByUsername(String username) {
-        User user = template.getForObject(url + "/username/" + username, User.class);
-        return user;
+    public Page <User> findUserByUsername(String username, Pageable pageable) {
+        User [] user = template.getForObject(url + "/username/" + username, User[].class);
+        List<User> lista = Arrays.asList(user);
+        Page<User> page = new PageImpl<>(lista, pageable, lista.size());
+        return page;
     }
 
     @Override

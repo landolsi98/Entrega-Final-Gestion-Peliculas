@@ -16,7 +16,7 @@ public class FilmsServiceImpl implements es.uah.cFilmsActores.service.IFilmsServ
     @Autowired
     RestTemplate template;
 
-    String url ="http://localhost:8001/films";
+    String url ="http://localhost:8090/api/films/films";
 
     @Override
     public Page<Film> buscarTodos(Pageable pageable){

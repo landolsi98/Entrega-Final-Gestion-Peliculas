@@ -11,7 +11,7 @@ public interface IUsersService {
 
     User findUserById (Integer idUser);
 
-    User findUserByUsername(String username);
+    Page<User> findUserByUsername(String username, Pageable pageable);
 
     User findUserByEmail (String email);
 
